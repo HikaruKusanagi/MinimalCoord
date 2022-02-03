@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1001319900356",
+    "project_id": "minimalcoord-a24f8",
+    "storage_bucket": "minimalcoord-a24f8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1001319900356:android:1008fecf97a2d55e9e1591",
+        "android_client_info": {
+          "package_name": "com.hikaru.minimal_coord"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1001319900356-5n7opufjs1rul6bn0vle7d3j4038b3k5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADDWbbj-IOit_uq_VmXI03uD6nyeg2WGg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1001319900356-5n7opufjs1rul6bn0vle7d3j4038b3k5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1001319900356-4j6mch7kkaa4130vf9o2n50k6or9h6j7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hikaru.minimalcoord.minimalCoord"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

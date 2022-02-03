@@ -1,0 +1,61 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:minimal_coord/coordinate_list/coordinate_list_model.dart';
+import 'package:provider/provider.dart';
+
+class TopsPage extends StatelessWidget {
+
+  TopsPage(
+      this.tops,
+      this.imgTopsURL,
+      );
+
+  final  tops;
+  final  imgTopsURL;
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<CoordinateListModel>(
+      create: (_) => CoordinateListModel()..fechCoordinateList(),
+      child: Scaffold(
+        appBar: AppBar(
+        backgroundColor: Colors.black,
+          title:  Text('Item', style: GoogleFonts.yuseiMagic(
+            textStyle: const TextStyle(
+              color: Colors.white,
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          ),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 500,
+                width: 500,
+                child: Card(
+                  color: Colors.white,
+                    child: Image.network(imgTopsURL!)
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(tops,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

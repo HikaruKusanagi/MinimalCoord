@@ -1,0 +1,422 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:minimal_coord/accessories_page/accessories_page.dart';
+import 'package:minimal_coord/bottmos_page/bottmos_page.dart';
+import 'package:minimal_coord/outer_page/outer_page.dart';
+import 'package:minimal_coord/post_user_detail/post_user_detail.model.dart';
+import 'package:minimal_coord/shoes_page/shoe_page.dart';
+import 'package:minimal_coord/tops_page/tops_page.dart';
+import 'package:provider/provider.dart';
+
+class PostUserDetailPage extends StatelessWidget {
+  PostUserDetailPage(
+      this.height,
+      this.tops,
+      this.bottoms,
+      this.outer,
+      this.shoes,
+      this.accessories,
+
+      this.imgURL,
+      this.imgTopsURL,
+      this.imgBottomsURL,
+      this.imgOuterURL,
+      this.imgShoesURL,
+      this.imgAccessoriesURL,
+      );
+  final  height;
+  final  tops;
+  final  bottoms;
+  final  outer;
+  final  shoes;
+  final  accessories;
+
+  final  imgURL;
+  final  imgTopsURL;
+  final  imgBottomsURL;
+  final  imgOuterURL;
+  final  imgShoesURL;
+  final  imgAccessoriesURL;
+
+  final user = FirebaseAuth.instance.currentUser!;
+
+  @override
+  Widget build(BuildContext context) {
+
+    return ChangeNotifierProvider<PostUserDetailModel>(
+      create: (_) => PostUserDetailModel(),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          title: Text('Coordinate', style: GoogleFonts.yuseiMagic(
+            textStyle: const TextStyle(
+              color: Colors.white,
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          ),
+          centerTitle: false,
+          ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(height: 30),
+              GestureDetector(
+                child: SizedBox(
+                  height: 300,
+                  width: 300,
+                  child: Container(
+                    decoration: BoxDecoration(color: Colors.grey,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(
+                      child: Image.network(imgURL!),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  Flexible(
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            // IconButton(
+                            //   iconSize: 20,
+                            //   icon: const Icon(Icons.thumb_up),
+                            //   onPressed: () {
+                            //   },
+                            // ),
+                            // Text('10',
+                            //   style: TextStyle(
+                            //     color: Colors.black,
+                            //     fontSize: 15,
+                            //     fontWeight: FontWeight.bold,
+                            //   ),
+                            // ),
+                          ],
+                        ),
+                        SizedBox(
+                          width: 350,
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 180,
+                                child: Card(
+                                  child: ListTile(
+                                    leading: CircleAvatar(
+                                      radius: 25,
+                                      backgroundImage: NetworkImage(user.photoURL!),
+                                    ),
+                                    title: Row(
+                                      children: [
+                                        Text(user.displayName!,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    subtitle: Text(height + 'cm',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Column(
+                  children: [
+                    Consumer<PostUserDetailModel>(builder: (context, model, child) {
+                    return Row(
+                      children: [
+                        SizedBox(width: 10),
+                        Column(
+                          children: [
+                            Text('Tops',style: GoogleFonts.yuseiMagic(
+                              textStyle: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            ),
+                            GestureDetector(
+                              child: SizedBox(
+                                height: 100,
+                                width: 100,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                        builder: (context) =>
+                                            TopsPage(
+                                              tops,
+                                              imgTopsURL,
+                                            ),
+                                        ),
+                                    );
+                                    },
+                                  child: Container(
+                                    decoration: BoxDecoration(color: Colors.grey,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Center(
+                                      child: Image.network(imgTopsURL!),
+                                  ),
+                                ),
+                                ),
+                              ),
+                            ),
+                            Text(tops,style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Column(
+                              children: [
+                                Text('Shoes',style: GoogleFonts.yuseiMagic(
+                                  textStyle: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                ),
+                                GestureDetector(
+                                  child: SizedBox(
+                                    height: 100,
+                                    width: 100,
+                                    child: InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ShoesPage(
+                                                    shoes,
+                                                    imgShoesURL,
+                                                ),
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(color: Colors.grey,
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        child: Center(
+                                          child: Image.network(imgShoesURL!),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Text(shoes,style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                ),
+                                const SizedBox(height: 10),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(width: 10),
+                        Column(
+                          children: [
+                            Text('Bottmos',style: GoogleFonts.yuseiMagic(
+                              textStyle: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            ),
+                            GestureDetector(
+                              child: SizedBox(
+                                height: 100,
+                                width: 100,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            BottmosPage(
+                                              bottoms,
+                                              imgBottomsURL,
+                                            ),
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(color: Colors.grey,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Center(
+                                      child: Image.network(imgBottomsURL!),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Text(bottoms,style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            ),
+                            const SizedBox(height: 10),
+                            Column(
+                              children: [
+                                Text('Accessories',style: GoogleFonts.yuseiMagic(
+                                  textStyle: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                ),
+                                GestureDetector(
+                                  child: SizedBox(
+                                    height: 100,
+                                    width: 100,
+                                    child: InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                AccessoriesPage(
+                                                  accessories,
+                                                  imgAccessoriesURL,
+                                                ),
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(color: Colors.grey,
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        child: Center(
+                                          child: Image.network(imgAccessoriesURL!),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Text(accessories,style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                ),
+                                SizedBox(height: 10),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(width: 10),
+                        Column(
+                          children: [
+                            Text('Outer',style: GoogleFonts.yuseiMagic(
+                              textStyle: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            ),
+                            GestureDetector(
+                              child: SizedBox(
+                                height: 100,
+                                width: 100,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            OuterPage(
+                                                outer,
+                                                imgOuterURL,
+                                            ),
+                                      ),
+                                    );
+                                    },
+                                  child: Container(
+                                    decoration: BoxDecoration(color: Colors.grey,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Center(
+                                      child: Image.network(imgOuterURL!),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Text(outer,style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            ),
+                            SizedBox(height: 10),
+                            Column(
+                              children: [
+                                Text('',style: GoogleFonts.yuseiMagic(
+                                  textStyle: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                ),
+                                GestureDetector(
+                                  child: SizedBox(
+                                    height: 100,
+                                    width: 100,
+                                  ),
+                                ),
+                                SizedBox(height: 30),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    );
+                    },
+                    ),
+                  ]),
+              ),
+            ]
+          ),
+        ),
+      ),
+    );
+  }
+}
