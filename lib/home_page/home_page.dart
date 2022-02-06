@@ -12,9 +12,9 @@ class HomePage extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasData) { //ログイン情報を持っている場合はUserPageに遷移
+        } else if (snapshot.hasData) {
+          //ログイン情報を持っている場合はUserPageに遷移
           return BottomNavigationBarPage();
-
         } else if (snapshot.hasError) {
           //適切でない文字が入力された場合
           return Center(child: Text('問題が発生しました'));

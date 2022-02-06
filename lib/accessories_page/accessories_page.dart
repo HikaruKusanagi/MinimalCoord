@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minimal_coord/coordinate_list/coordinate_list_model.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 
 class AccessoriesPage extends StatelessWidget {
@@ -36,8 +37,9 @@ class AccessoriesPage extends StatelessWidget {
                 height: 500,
                 width: 500,
                 child: Card(
-                    color: Colors.white,
-                    child: Image.network(imgAccessoriesURL!)
+                  color: Colors.white,
+                  child: PhotoView(
+                      imageProvider: NetworkImage(imgAccessoriesURL!)),
                 ),
               ),
               Row(

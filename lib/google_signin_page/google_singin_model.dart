@@ -39,15 +39,23 @@ class GoogleSigInModel extends ChangeNotifier {
   }
 
   Future appleLogin() async {
-    final credential = await SignInWithApple.getAppleIDCredential(
+
+    final rawNonce = generateNonce();
+
+    final appleCredential = await SignInWithApple.getAppleIDCredential(
       scopes: [
         AppleIDAuthorizationScopes.email,
         AppleIDAuthorizationScopes.fullName,
       ],
     );
 
-    //await FirebaseAuth.instance.signInWithCredential(credential);
-    print(credential);
+    final oauthCredential = OAuthProvider("apple.com").credential(
+      idToken: appleCredential.identityToken,
+      rawNonce: rawNonce,
+    );
+
+    await FirebaseAuth.instance.signInWithCredential(oauthCredential);
+    print(appleCredential);
     notifyListeners();
   }
 

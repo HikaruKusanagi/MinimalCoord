@@ -5,8 +5,9 @@ import 'package:minimal_coord/accessories_page/accessories_page.dart';
 import 'package:minimal_coord/bottmos_page/bottmos_page.dart';
 import 'package:minimal_coord/outer_page/outer_page.dart';
 import 'package:minimal_coord/post_user_detail/post_user_detail.model.dart';
-import 'package:minimal_coord/shoes_page/shoe_page.dart';
+import 'package:minimal_coord/shoes_page/shoes_page.dart';
 import 'package:minimal_coord/tops_page/tops_page.dart';
+import 'package:minimal_coord/wholebody/whole_body_page.dart';
 import 'package:provider/provider.dart';
 
 class PostUserDetailPage extends StatelessWidget {
@@ -71,8 +72,24 @@ class PostUserDetailPage extends StatelessWidget {
                     decoration: BoxDecoration(color: Colors.grey,
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Center(
-                      child: Image.network(imgURL!),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                WholeBodyPage(
+                                  imgURL,
+                                ),
+                          ),
+                        );
+                      },
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Image.network(imgURL!),
+                        ),
+                      ),
                     ),
                   ),
                 ),

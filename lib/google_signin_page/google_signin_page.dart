@@ -1,10 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minimal_coord/google_signin_page/google_singin_model.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_button/sign_button.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 
 class GoogleSigInPage extends StatelessWidget {

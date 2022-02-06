@@ -4,15 +4,13 @@ import 'package:minimal_coord/coordinate_list/coordinate_list_model.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 
-class BottmosPage extends StatelessWidget {
+class WholeBodyPage extends StatelessWidget {
 
-  BottmosPage(
-      this.bottms,
-      this.imgBootsURL,
+  WholeBodyPage(
+      this.imgURL,
       );
 
-  final bottms;
-  final imgBootsURL;
+  final  imgURL;
 
   @override
   Widget build(BuildContext context) {
@@ -37,22 +35,10 @@ class BottmosPage extends StatelessWidget {
                 height: 500,
                 width: 500,
                 child: Card(
-                    color: Colors.white,
+                  color: Colors.white,
                   child: PhotoView(
-                      imageProvider: NetworkImage(imgBootsURL!)),
+                      imageProvider: NetworkImage(imgURL!)),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(bottms,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
               ),
             ],
           ),

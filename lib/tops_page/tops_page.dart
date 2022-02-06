@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minimal_coord/coordinate_list/coordinate_list_model.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 
 class TopsPage extends StatelessWidget {
@@ -37,7 +38,8 @@ class TopsPage extends StatelessWidget {
                 width: 500,
                 child: Card(
                   color: Colors.white,
-                    child: Image.network(imgTopsURL!)
+                    child: PhotoView(
+                        imageProvider: NetworkImage(imgTopsURL!)),
                 ),
               ),
               Row(
