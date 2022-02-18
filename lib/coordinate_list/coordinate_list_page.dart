@@ -2,16 +2,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:minimal_coord/add_coordinate/add_coordinate_page.dart';
 import 'package:minimal_coord/coordinate_list/coordinate_list_model.dart';
 import 'package:minimal_coord/domain/coordinate.dart';
 import 'package:minimal_coord/google_signin_page/google_singin_model.dart';
+import 'package:minimal_coord/post_coordinate/post_coordinate_page.dart';
 import 'package:minimal_coord/post_user_detail/post_user_detail_page.dart';
+import 'package:minimal_coord/report_page/report_page.dart';
+import 'package:minimal_coord/rule_page/rule_page.dart';
+import 'package:minimal_coord/test.dart';
 import 'package:provider/provider.dart';
 
 class CoordinateListPage extends StatelessWidget {
 
   final user = FirebaseAuth.instance.currentUser!;
+  bool _isShow = true;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +40,15 @@ class CoordinateListPage extends StatelessWidget {
           centerTitle: false,
           actions: [
             IconButton(
+                icon: const Icon(Icons.info),
+                color: Colors.black,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RulePage()),
+                  );
+                }),
+            IconButton(
                 icon: const Icon(Icons.logout),
                 color: Colors.black,
                 onPressed: () {
@@ -50,38 +63,84 @@ class CoordinateListPage extends StatelessWidget {
             if (coordinate == null) {
               return const CircularProgressIndicator();
             }
-
             final List<Widget> widgets = coordinate
                 .map(
                   (coordinate) => Card(
                     color: Colors.white,
-                    child: ListTile(
-                        title: coordinate.imgURL != null
-                            ? Image.network(coordinate.imgURL!)
-                            : null,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  PostUserDetailPage(
-                                    coordinate.height,
-                                    coordinate.tops,
-                                    coordinate.bottoms,
-                                    coordinate.outer,
-                                    coordinate.shoes,
-                                    coordinate.accessories,
-
-                                    coordinate.imgURL!,
-                                    coordinate.imgTopsURL!,
-                                    coordinate.imgBottomsURL!,
-                                    coordinate.imgOuterURL!,
-                                    coordinate.imgShoesURL!,
-                                    coordinate.imgAccessoriesURL!,
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(width: 160),
+                            ElevatedButton(
+                              child: Text('通報',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.black,
+                              ),
+                              onPressed: () =>
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                  ReportPage(
+                                      coordinate.imgURL!
+                                  ),
+                                    ),
                                   ),
                             ),
-                          );
-                        }
+                            SizedBox(width: 20),
+                            ElevatedButton(
+                              onPressed: () {
+                                model.toggleShowText;
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.black,
+                              ),
+                              child: Text('ブロック',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Visibility(
+                          visible: model.isVisible,
+                          child: ListTile(
+                              title: coordinate.imgURL != null
+                                  ? Image.network(coordinate.imgURL!)
+                                  : null,
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        PostUserDetailPage(
+                                          coordinate.height,
+                                          coordinate.tops,
+                                          coordinate.bottoms,
+                                          coordinate.outer,
+                                          coordinate.shoes,
+                                          coordinate.accessories,
+
+                                          coordinate.imgURL!,
+                                          coordinate.imgTopsURL!,
+                                          coordinate.imgBottomsURL!,
+                                          coordinate.imgOuterURL!,
+                                          coordinate.imgShoesURL!,
+                                          coordinate.imgAccessoriesURL!,
+                                        ),
+                                  ),
+                                );
+                              }
+                          ),
+                        ),
+                      ],
                     ),
                   ),
             )
@@ -101,7 +160,7 @@ class CoordinateListPage extends StatelessWidget {
                 await Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => AddCoordinatePage(),
+                      builder: (context) => PostCoordinatePage(),
                       fullscreenDialog: true
                   ),
                 );

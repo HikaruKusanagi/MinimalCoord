@@ -118,42 +118,42 @@ class PostUserDetailPage extends StatelessWidget {
                             // ),
                           ],
                         ),
-                        SizedBox(
-                          width: 350,
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 180,
-                                child: Card(
-                                  child: ListTile(
-                                    leading: CircleAvatar(
-                                      radius: 25,
-                                      backgroundImage: NetworkImage(user.photoURL!),
-                                    ),
-                                    title: Row(
-                                      children: [
-                                        Text(user.displayName!,
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    subtitle: Text(height + 'cm',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        // SizedBox(
+                        //   width: 350,
+                        //   child: Row(
+                        //     children: [
+                        //       SizedBox(
+                        //         width: 180,
+                        //         child: Card(
+                        //           child: ListTile(
+                        //             leading: CircleAvatar(
+                        //               radius: 25,
+                        //               backgroundImage: NetworkImage(user.photoURL!),
+                        //             ),
+                        //             title: Row(
+                        //               children: [
+                        //                 Text(user.displayName!,
+                        //                   style: TextStyle(
+                        //                     color: Colors.black,
+                        //                     fontSize: 15,
+                        //                     fontWeight: FontWeight.bold,
+                        //                   ),
+                        //                 ),
+                        //               ],
+                        //             ),
+                        //             subtitle: Text(height + 'cm',
+                        //               style: TextStyle(
+                        //                 color: Colors.black,
+                        //                 fontSize: 15,
+                        //                 fontWeight: FontWeight.bold,
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

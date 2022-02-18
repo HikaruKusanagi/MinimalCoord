@@ -5,6 +5,12 @@ import 'package:minimal_coord/domain/coordinate.dart';
 class CoordinateListModel extends ChangeNotifier {
   List<Coordinate>? coordinate;
 
+  bool isVisible = true;
+
+  void toggleShowText(){
+    isVisible = !isVisible;
+    notifyListeners();
+  }
 
   void fechCoordinateList() async {
     final QuerySnapshot snapshot =
