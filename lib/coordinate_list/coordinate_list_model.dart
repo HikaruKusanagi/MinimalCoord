@@ -5,7 +5,7 @@ import 'package:minimal_coord/domain/coordinate.dart';
 class CoordinateListModel extends ChangeNotifier {
   List<Coordinate>? coordinate;
 
-  bool isVisible = true;
+  bool isVisible = false;
 
   void toggleShowText(){
     isVisible = !isVisible;
@@ -55,4 +55,8 @@ class CoordinateListModel extends ChangeNotifier {
     this.coordinate = coordinate;
     notifyListeners();
   }
+
+    Future deleteImgURL(Coordinate coordinate) {
+      return FirebaseFirestore.instance.collection('coordinate').doc(coordinate.id).delete();
+    }
 }

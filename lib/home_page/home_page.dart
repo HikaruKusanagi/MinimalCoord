@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:minimal_coord/bottom_navigation_bar/bttom_navigation_bar.dart';
+import 'package:minimal_coord/coordinate_list/coordinate_list_page.dart';
 import 'package:minimal_coord/google_signin_page/google_signin_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         } else if (snapshot.hasData) {
           //ログイン情報を持っている場合はUserPageに遷移
-          return BottomNavigationBarPage();
+          return CoordinateListPage();
         } else if (snapshot.hasError) {
           //適切でない文字が入力された場合
           return Center(child: Text('問題が発生しました'));

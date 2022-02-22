@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:minimal_coord/post_coordinate/post_coordnate_page.model.dart';
-import 'package:minimal_coord/wholebody/whole_body_page.dart';
+import 'package:minimal_coord/report_page/report_page_model.dart';
 import 'package:provider/provider.dart';
 
 class ReportPage extends StatelessWidget {
@@ -12,8 +11,8 @@ class ReportPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return ChangeNotifierProvider<PostCoordinatePageModel>(
-      create: (_) => PostCoordinatePageModel(),
+    return ChangeNotifierProvider<ReportPageModel>(
+      create: (_) => ReportPageModel(),
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black,
@@ -39,7 +38,7 @@ class ReportPage extends StatelessWidget {
         ),
         body: SingleChildScrollView(
           child: Center(
-            child: Consumer<PostCoordinatePageModel>(builder: (context, model, child) {
+            child: Consumer<ReportPageModel>(builder: (context, model, child) {
               return Stack(
                 children: [
                   Padding(
@@ -55,23 +54,10 @@ class ReportPage extends StatelessWidget {
                               decoration: BoxDecoration(color: Colors.grey,
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          WholeBodyPage(
-                                            imgURL,
-                                          ),
-                                    ),
-                                  );
-                                },
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: Image.network(imgURL!),
-                                  ),
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Image.network(imgURL!),
                                 ),
                               ),
                             ),
@@ -95,7 +81,6 @@ class ReportPage extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-
                             Container(
                               width: 350,
                               height: 200,
@@ -122,24 +107,6 @@ class ReportPage extends StatelessWidget {
                         ),
                         SizedBox(height: 30),
                         ElevatedButton(
-                          onPressed: () async {
-                            // 追加の処理
-                            try {
-                              model.startLoading();
-                              await model.addCoordinate();
-                              Navigator.of(context).pop(true);
-                            } catch (e) {
-                              print(e);
-                              final snackBar = SnackBar(
-                                backgroundColor: Colors.red,
-                                content: Text(e.toString()),
-                              );
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-                            } finally {
-                              model.endLoading();
-                            }
-                          },
                           child:  Text(
                             '送信',
                             style: TextStyle(
@@ -150,6 +117,9 @@ class ReportPage extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                             primary: Colors.black,
                           ),
+                          onPressed: () async {
+                            // 追加の処理
+                          },
                         ),
                       ],
                     ),

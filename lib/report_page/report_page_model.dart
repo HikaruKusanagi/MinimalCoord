@@ -1,10 +1,10 @@
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
-import 'package:firebase_storage/firebase_storage.dart';
 
-class PostCoordinatePageModel extends ChangeNotifier {
+class ReportPageModel extends ChangeNotifier {
 
   String? height;
   String? tops;
@@ -33,9 +33,50 @@ class PostCoordinatePageModel extends ChangeNotifier {
   }
 
   Future addCoordinate() async {
-
     if (imageFile == null || imageFile == "") {
       throw '全身画像が入力されていません';
+    }
+
+    if (topsImageFile == null || topsImageFile == "") {
+      throw 'Tops画像が入力されていません';
+    }
+
+    if (bottomsImageFile == null || bottomsImageFile == "") {
+      throw 'Bottoms画像が入力されていません';
+    }
+
+    if (outerImageFile == null || outerImageFile == "") {
+      throw 'Outer画像が入力されていません';
+    }
+    if (shoesImageFile == null || shoesImageFile == "") {
+      throw 'Shoes画像が入力されていません';
+    }
+    if (accessoriesImageFile == null || accessoriesImageFile == "") {
+      throw 'Accessories画像が入力されていません';
+    }
+
+    if (height == null || height == "") {
+      throw '身長が入力されていません';
+    }
+
+    if (tops == null || tops == "") {
+      throw 'topsが入力されていません';
+    }
+
+    if (bottoms == null || bottoms!.isEmpty) {
+      throw 'bottomsが入力されていません';
+    }
+
+    if (outer == null || outer == "") {
+      throw 'outerが入力されていません';
+    }
+
+    if (shoes == null || shoes == "") {
+      throw 'shoesが入力されていません';
+    }
+
+    if (accessories == null || accessories!.isEmpty) {
+      throw 'accessoriesが入力されていません';
     }
 
     final doc = FirebaseFirestore.instance.collection('coordinate').doc();
@@ -56,7 +97,6 @@ class PostCoordinatePageModel extends ChangeNotifier {
     }
 
     if (topsImageFile != null) {
-
       final task = await FirebaseStorage.instance
           .ref('coordinate/${doc.id}_tops')
           .putFile(topsImageFile!);
@@ -72,7 +112,6 @@ class PostCoordinatePageModel extends ChangeNotifier {
     }
 
     if (outerImageFile != null) {
-
       final task = await FirebaseStorage.instance
           .ref('coordinate/${doc.id}_outer')
           .putFile(outerImageFile!);
@@ -80,7 +119,6 @@ class PostCoordinatePageModel extends ChangeNotifier {
     }
 
     if (shoesImageFile != null) {
-
       final task = await FirebaseStorage.instance
           .ref('coordinate/${doc.id}_shoes')
           .putFile(shoesImageFile!);
@@ -88,7 +126,6 @@ class PostCoordinatePageModel extends ChangeNotifier {
     }
 
     if (accessoriesImageFile != null) {
-
       final task = await FirebaseStorage.instance
           .ref('coordinate/${doc.id}_accessories')
           .putFile(accessoriesImageFile!);
@@ -97,7 +134,7 @@ class PostCoordinatePageModel extends ChangeNotifier {
 
     // firestoreに追加
     await doc.set({
-      'height' : height,
+      'height': height,
       'tops': tops,
       'bottoms': bottoms,
       'outer': outer,
@@ -106,10 +143,10 @@ class PostCoordinatePageModel extends ChangeNotifier {
 
       'imgURL': imgURL,
       'imgTopsURL': imgTopsURL,
-      'imgBottomsURL' :imgBottomsURL,
-      'imgOuterURL' : imgOuterURL,
-      'imgShoesURL' : imgShoesURL,
-      'imgAccessoriesURL' : imgAccessoriesURL,
+      'imgBottomsURL': imgBottomsURL,
+      'imgOuterURL': imgOuterURL,
+      'imgShoesURL': imgShoesURL,
+      'imgAccessoriesURL': imgAccessoriesURL,
     });
   }
 
@@ -154,15 +191,6 @@ class PostCoordinatePageModel extends ChangeNotifier {
 
     if (pickedFile != null) {
       shoesImageFile = File(pickedFile.path);
-      notifyListeners();
-    }
-  }
-
-  Future accessoriesImage() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      accessoriesImageFile = File(pickedFile.path);
       notifyListeners();
     }
   }
