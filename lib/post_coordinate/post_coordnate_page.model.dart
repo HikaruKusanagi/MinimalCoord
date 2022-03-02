@@ -38,6 +38,10 @@ class PostCoordinatePageModel extends ChangeNotifier {
       throw '全身画像が入力されていません';
     }
 
+    if (topsImageFile == null || topsImageFile == "") {
+      throw 'tops画像が入力されていません';
+    }
+
     final doc = FirebaseFirestore.instance.collection('coordinate').doc();
 
     String? imgURL;

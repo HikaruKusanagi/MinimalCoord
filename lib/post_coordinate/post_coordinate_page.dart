@@ -134,31 +134,8 @@ class PostCoordinatePage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            GestureDetector(
-                              child: SizedBox(
-                                height: 100,
-                                width: 100,
-                              ),
-                            ),
-                            // Container(
-                            //   width: 230,
-                            //   child: TextField(
-                            //     maxLength: 7,
-                            //     decoration: const InputDecoration(
-                            //       hintText: 'TopsMaker ',
-                            //     ),
-                            //     onChanged: (text) {
-                            //       model.topsMaker = text;
-                            //     },
-                            //   ),
-                            // ),
-                          ],
-                        ),
                         SizedBox(
-                          height: 20,
+                          height: 30,
                         ),
                         Row(
                           children: [
@@ -209,31 +186,8 @@ class PostCoordinatePage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            GestureDetector(
-                              child: SizedBox(
-                                height: 100,
-                                width: 100,
-                              ),
-                            ),
-                            // Container(
-                            //   width: 230,
-                            //   child: TextField(
-                            //     maxLength: 7,
-                            //     decoration: const InputDecoration(
-                            //       hintText: 'BottomsMaker ',
-                            //     ),
-                            //     onChanged: (text) {
-                            //       model.bottomsMaker = text;
-                            //     },
-                            //   ),
-                            // ),
-                          ],
-                        ),
                         SizedBox(
-                          height: 20,
+                          height: 30,
                         ),
                         Row(
                           children: [
@@ -282,29 +236,6 @@ class PostCoordinatePage extends StatelessWidget {
                                 },
                               ),
                             ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            GestureDetector(
-                              child: SizedBox(
-                                height: 100,
-                                width: 100,
-                              ),
-                            ),
-                            // Container(
-                            //   width: 230,
-                            //   child: TextField(
-                            //     maxLength: 7,
-                            //     decoration: const InputDecoration(
-                            //       hintText: 'OuterMaker ',
-                            //     ),
-                            //     onChanged: (text) {
-                            //       model.outerMaker = text;
-                            //     },
-                            //   ),
-                            // ),
                           ],
                         ),
                         SizedBox(
@@ -359,29 +290,6 @@ class PostCoordinatePage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            GestureDetector(
-                              child: SizedBox(
-                                height: 100,
-                                width: 100,
-                              ),
-                            ),
-                            // Container(
-                            //   width: 230,
-                            //   child: TextField(
-                            //     maxLength: 7,
-                            //     decoration: const InputDecoration(
-                            //       hintText: 'ShoesMaker',
-                            //     ),
-                            //     onChanged: (text) {
-                            //       model.shoesMaker = text;
-                            //     },
-                            //   ),
-                            // ),
-                          ],
-                        ),
                         SizedBox(
                           height: 20,
                         ),
@@ -434,29 +342,6 @@ class PostCoordinatePage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            GestureDetector(
-                              child: SizedBox(
-                                height: 100,
-                                width: 100,
-                              ),
-                            ),
-                            // Container(
-                            //   width: 230,
-                            //   child: TextField(
-                            //     maxLength: 7,
-                            //     decoration: const InputDecoration(
-                            //       hintText: 'AccessoriesMaker ',
-                            //     ),
-                            //     onChanged: (text) {
-                            //       model.accessoriesMaker = text;
-                            //     },
-                            //   ),
-                            // ),
-                          ],
-                        ),
                         ElevatedButton(
                           onPressed: () async {
                             // 追加の処理
@@ -467,7 +352,7 @@ class PostCoordinatePage extends StatelessWidget {
                             } catch (e) {
                               print(e);
                               final snackBar = SnackBar(
-                                backgroundColor: Colors.red,
+                                backgroundColor: Colors.black,
                                 content: Text(e.toString()),
                               );
                               ScaffoldMessenger.of(context)
@@ -494,6 +379,8 @@ class PostCoordinatePage extends StatelessWidget {
                   //読み込んでいる最中
                   if (model.isLoading)
                     Container(
+                      height: 300,
+                      width: 300,
                       color: Colors.black54,
                       child: const Center(
                         child: CircularProgressIndicator(),

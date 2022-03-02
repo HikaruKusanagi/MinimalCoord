@@ -45,6 +45,7 @@ dependencies:
   image_picker: ^0.8.4+4
   firebase_storage: ^10.2.5
   photo_view: ^0.13.0
+  webview_flutter: ^3.0.0
 
 flutter_native_splash:
   image: "images/スプラッシュ画面.png"

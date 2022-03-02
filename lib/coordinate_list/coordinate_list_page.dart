@@ -73,7 +73,7 @@ class CoordinateListPage extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SizedBox(width: 170),
+                                SizedBox(width: 200),
                                 ElevatedButton(
                                   child: Text('通報',
                                     style: TextStyle(
@@ -96,7 +96,7 @@ class CoordinateListPage extends StatelessWidget {
                                 ),
                                 SizedBox(width: 10),
                                 ElevatedButton(
-                                  child: Text('ブロック',
+                                  child: Text('削除',
                                     style: TextStyle(
                                       color: Colors.white,
                                     ),
@@ -187,7 +187,7 @@ class CoordinateListPage extends StatelessWidget {
         builder: (_) {
           return AlertDialog(
             title: Text("削除の確認"),
-            content: Text("『${'この投稿画像'}』を削除しますか？"),
+            content: Text('この投稿画像を削除しますか？'),
             actions: [
               TextButton(
                 child: Text("いいえ"),
@@ -201,7 +201,7 @@ class CoordinateListPage extends StatelessWidget {
                   Navigator.pop(context);
                   final snackBar = SnackBar(
                     backgroundColor: Colors.black,
-                    content: Text('${'投稿画像'}を削除しました'),
+                    content: Text('投稿画像を削除しました'),
                   );
                   model.fechCoordinateList();
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
