@@ -1,5 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minimal_coord/coordinate_list/coordinate_list_model.dart';
@@ -12,8 +10,6 @@ import 'package:minimal_coord/rule_page/rule_page.dart';
 import 'package:provider/provider.dart';
 
 class CoordinateListPage extends StatelessWidget {
-
-  final user = FirebaseAuth.instance.currentUser!;
 
   @override
   Widget build(BuildContext context) {

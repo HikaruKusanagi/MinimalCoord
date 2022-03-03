@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -10,6 +11,9 @@ class GoogleSigInModel extends ChangeNotifier {
   String? Outer = '';
   String? Shoes = '';
   String? Accessorie = '';
+  String? email;
+  String? displayName;
+  String? uid;
 
   final googleSignIn = GoogleSignIn();
 
@@ -18,17 +22,25 @@ class GoogleSigInModel extends ChangeNotifier {
   GoogleSignInAccount get user => _user!;
 
   Future googleLogin() async {
+
     try {
       final googleUser = await googleSignIn.signIn();
       if (googleUser == null) return;
       _user = googleUser;
-
       final googleAuth = await googleUser.authentication;
 
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
+
+      //Firestoreに追加
+      final doc = FirebaseFirestore.instance.collection('users').doc(uid);
+      await doc.set({
+        'uid' : uid,
+        'displayName': user.displayName,
+        'email': user.email,
+      });
 
       await FirebaseAuth.instance.signInWithCredential(credential);
     } catch (e) {
@@ -65,3 +77,4 @@ class GoogleSigInModel extends ChangeNotifier {
     FirebaseAuth.instance.signOut();
   }
 }
+
