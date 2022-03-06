@@ -82,7 +82,7 @@ class CoordinateListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future deleteImgURL(Coordinate coordinate) {
+  Future blockUser(Coordinate coordinate) {
     return FirebaseFirestore.instance.collection('blocks')
         .doc(coordinate.id).set(
       {

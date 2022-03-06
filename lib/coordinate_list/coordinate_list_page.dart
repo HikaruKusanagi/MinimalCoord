@@ -193,7 +193,7 @@ class CoordinateListPage extends StatelessWidget {
                 child: Text("はい"),
                 onPressed: () async {
                   // modelで削除
-                  await model.deleteImgURL(coordinate);
+                  await model.blockUser(coordinate);
                   Navigator.pop(context);
                   final snackBar = SnackBar(
                     backgroundColor: Colors.black,
