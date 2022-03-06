@@ -4,6 +4,7 @@ import 'package:minimal_coord/coordinate_list/coordinate_list_page.dart';
 import 'package:minimal_coord/google_signin_page/google_signin_page.dart';
 
 class HomePage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) => Scaffold(
     body: StreamBuilder(

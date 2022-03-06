@@ -7,7 +7,6 @@ import 'package:sign_button/sign_button.dart';
 
 class GoogleSigInPage extends StatelessWidget {
 
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<GoogleSigInModel>(

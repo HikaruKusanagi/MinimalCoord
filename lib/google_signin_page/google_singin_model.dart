@@ -35,9 +35,8 @@ class GoogleSigInModel extends ChangeNotifier {
       );
 
       //Firestoreに追加
-      final doc = FirebaseFirestore.instance.collection('users').doc(uid);
+      final doc = FirebaseFirestore.instance.collection('users').doc();
       await doc.set({
-        'uid' : uid,
         'displayName': user.displayName,
         'email': user.email,
       });

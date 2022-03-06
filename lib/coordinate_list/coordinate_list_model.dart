@@ -1,11 +1,37 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:minimal_coord/domain/coordinate.dart';
+import 'dart:io';
 
 class CoordinateListModel extends ChangeNotifier {
-  List<Coordinate>? coordinate;
 
+  final user = FirebaseAuth.instance.currentUser!;
+  List<Coordinate>? coordinate;
+  List _blockedIds = [];
   bool isVisible = false;
+
+  String? displayName;
+  String? height;
+  String? tops;
+  String? bottoms;
+  String? outer;
+  String? shoes;
+  String? accessories;
+
+  String? imgURL;
+  String? imgTopsURL;
+  String? imgBottomsURL;
+  String? imgOuterURL;
+  String? imgShoesURL;
+  String? imgAccessoriesURL;
+
+  File? imageFile;
+  File? topsImageFile;
+  File? bottomsImageFile;
+  File? outerImageFile;
+  File? shoesImageFile;
+  File? accessoriesImageFile;
 
   void toggleShowText(){
     isVisible = !isVisible;
@@ -56,7 +82,24 @@ class CoordinateListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-    Future deleteImgURL(Coordinate coordinate) {
-      return FirebaseFirestore.instance.collection('coordinate').doc(coordinate.id).delete();
-    }
+  Future deleteImgURL(Coordinate coordinate) {
+    return FirebaseFirestore.instance.collection('blocks')
+        .doc(coordinate.id).set(
+      {
+        'height' : height,
+        'tops': tops,
+        'bottoms': bottoms,
+        'outer': outer,
+        'shoes': shoes,
+        'accessories': accessories,
+
+        'imgURL': imgURL,
+        'imgTopsURL': imgTopsURL,
+        'imgBottomsURL' :imgBottomsURL,
+        'imgOuterURL' : imgOuterURL,
+        'imgShoesURL' : imgShoesURL,
+        'imgAccessoriesURL' : imgAccessoriesURL,
+      }
+    );
+  }
 }

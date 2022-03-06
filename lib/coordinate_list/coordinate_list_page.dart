@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minimal_coord/coordinate_list/coordinate_list_model.dart';
@@ -10,6 +11,9 @@ import 'package:minimal_coord/rule_page/rule_page.dart';
 import 'package:provider/provider.dart';
 
 class CoordinateListPage extends StatelessWidget {
+
+  final user = FirebaseAuth.instance.currentUser!;
+  String? name;
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +73,7 @@ class CoordinateListPage extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SizedBox(width: 200),
+                                SizedBox(width: 170),
                                 ElevatedButton(
                                   child: Text('通報',
                                     style: TextStyle(
@@ -92,7 +96,7 @@ class CoordinateListPage extends StatelessWidget {
                                 ),
                                 SizedBox(width: 10),
                                 ElevatedButton(
-                                  child: Text('削除',
+                                  child: Text('ブロック',
                                     style: TextStyle(
                                       color: Colors.white,
                                     ),
@@ -172,18 +176,14 @@ class CoordinateListPage extends StatelessWidget {
       ),
     );
   }
-    Future showConfirmDialog(
-        BuildContext context,
-        Coordinate coordinate,
-        CoordinateListModel model,
-        ) {
+    Future showConfirmDialog(BuildContext context, Coordinate coordinate, CoordinateListModel model,) {
       return showDialog(
         context: context,
         barrierDismissible: false,
         builder: (_) {
           return AlertDialog(
-            title: Text("削除の確認"),
-            content: Text('この投稿画像を削除しますか？'),
+            title: Text("ブロックの確認"),
+            content: Text('この投稿ユーザーをブロックしますか？'),
             actions: [
               TextButton(
                 child: Text("いいえ"),
@@ -197,7 +197,7 @@ class CoordinateListPage extends StatelessWidget {
                   Navigator.pop(context);
                   final snackBar = SnackBar(
                     backgroundColor: Colors.black,
-                    content: Text('投稿画像を削除しました'),
+                    content: Text('投稿者をブロックしました'),
                   );
                   model.fechCoordinateList();
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
