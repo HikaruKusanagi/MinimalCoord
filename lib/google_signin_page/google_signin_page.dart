@@ -52,7 +52,7 @@ class GoogleSigInPage extends StatelessWidget {
                   onPressed: () {
                     final provider =
                     Provider.of<GoogleSigInModel>(context, listen: false);
-                    provider.googleLogin();
+                    provider.signInWithGoogle();
                   },
                 );
               },
