@@ -34,21 +34,33 @@ class GoogleSigInModel extends ChangeNotifier {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      final uid = FirebaseAuth.instance.currentUser?.uid;
-      //Firestoreに追加
-      final doc = FirebaseFirestore.instance.collection('users').doc(uid);
-      await doc.set({
-        'name': user.displayName,
-        'email': user.email,
-        'uid': uid,
-        });
+
+      if (email != null && password != null) {
+        // firebase authでユーザー作成
+        final userCredential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(email: email!, password: password!);
+        //SignIn時にuidを取得する
+        final uid = FirebaseAuth.instance.currentUser!.uid;
+        //uidが作成され、uidが取得される
+        final user = userCredential.user;
+        if (user != null) {
+          final uid = user.uid;
+
+          //Firestoreに追加
+          final doc = FirebaseFirestore.instance.collection('users').doc(uid);
+          await doc.set({
+            'name': user.displayName,
+            'email': user.email,
+            'uid': uid,
+          });
+        }
+      }
       // Google認証を通過した後、Firebase側にログイン
       await FirebaseAuth.instance.signInWithCredential(credential);
     } catch (e) {
       print(e.toString());
     }
-    final currentUser = FirebaseAuth.instance.currentUser;
-    final uid = currentUser!.uid;
+
     notifyListeners();
   }
 
