@@ -99,7 +99,8 @@ class PostCoordinatePageModel extends ChangeNotifier {
       imgAccessoriesURL = await task.ref.getDownloadURL();
     }
 
-    // firestoreに追加
+
+    // Firestoreに追加
     await doc.set({
       'height' : height,
       'tops': tops,

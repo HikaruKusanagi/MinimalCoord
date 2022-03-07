@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 
 class CoordinateListPage extends StatelessWidget {
 
-  final user = FirebaseAuth.instance.currentUser!;
+  final uid = FirebaseAuth.instance.currentUser!.uid;
   String? name;
 
   @override

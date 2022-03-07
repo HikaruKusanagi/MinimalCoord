@@ -12,8 +12,8 @@ class GoogleSigInModel extends ChangeNotifier {
   String? Shoes = '';
   String? Accessorie = '';
   String? email;
+  String? password;
   String? displayName;
-  String? uid;
 
   final googleSignIn = GoogleSignIn();
 
@@ -28,24 +28,27 @@ class GoogleSigInModel extends ChangeNotifier {
       if (googleUser == null) return;
       _user = googleUser;
       final googleAuth = await googleUser.authentication;
-
+      // ログイン時にユーザーのuidが作成される
+      // Google認証の部分
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-
+      final uid = FirebaseAuth.instance.currentUser?.uid;
       //Firestoreに追加
-      final doc = FirebaseFirestore.instance.collection('users').doc();
+      final doc = FirebaseFirestore.instance.collection('users').doc(uid);
       await doc.set({
-        'displayName': user.displayName,
+        'name': user.displayName,
         'email': user.email,
-      });
-
+        'uid': uid,
+        });
+      // Google認証を通過した後、Firebase側にログイン
       await FirebaseAuth.instance.signInWithCredential(credential);
     } catch (e) {
       print(e.toString());
     }
-
+    final currentUser = FirebaseAuth.instance.currentUser;
+    final uid = currentUser!.uid;
     notifyListeners();
   }
 
