@@ -1,9 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minimal_coord/post_coordinate/post_coordnate_page.model.dart';
 import 'package:provider/provider.dart';
 
 class PostCoordinatePage extends StatelessWidget {
+
+  final uid = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {

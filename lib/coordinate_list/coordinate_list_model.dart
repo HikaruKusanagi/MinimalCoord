@@ -81,7 +81,7 @@ class CoordinateListModel extends ChangeNotifier {
   }
 
   Future blockUser(Coordinate coordinate) {
-    final uid = user.uid;
+    final uid = FirebaseAuth.instance.currentUser!.uid;
     return FirebaseFirestore.instance.collection('blocks')
         .doc(uid).set(
       {

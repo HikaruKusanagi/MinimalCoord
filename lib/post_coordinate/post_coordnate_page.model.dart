@@ -8,9 +8,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 class PostCoordinatePageModel extends ChangeNotifier {
 
-  String? email;
-  String? displayName;
-
   String? height;
   String? tops;
   String? bottoms;
@@ -63,26 +60,7 @@ class PostCoordinatePageModel extends ChangeNotifier {
       throw 'tops画像が入力されていません';
     }
 
-    final googleUser = await googleSignIn.signIn();
-    if (googleUser == null) return;
-    _user = googleUser;
-    final googleAuth = await googleUser.authentication;
-
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-
-    final userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
-
-    final user = userCredential.user;
-    if (user == null) {
-      print('ログインに失敗している');
-      return;
-    }
-    final uid = user.uid;
-    final doc = FirebaseFirestore.instance.collection('coordinate').doc(uid);
-
+    final doc = FirebaseFirestore.instance.collection('coordinate').doc();
 
     if (imageFile != null) {
       // storageにアップロード
@@ -132,10 +110,13 @@ class PostCoordinatePageModel extends ChangeNotifier {
       imgAccessoriesURL = await task.ref.getDownloadURL();
     }
 
+    final uid = FirebaseAuth.instance.currentUser!.uid;
     // Firestoreに追加
-    await doc.set({
+    return FirebaseFirestore.instance.collection('coordinate')
+        .doc(uid).set(
+        {
       'name': user.displayName,
-      'email': user.email,
+      'uid': uid,
 
       'height' : height,
       'tops': tops,

@@ -12,7 +12,7 @@ class GoogleSigInModel extends ChangeNotifier {
   String? Shoes = '';
   String? Accessorie = '';
   String? email;
-  String? displayName;
+  String? AppleLoginName;
 
   final googleSignIn = GoogleSignIn();
 
@@ -20,48 +20,48 @@ class GoogleSigInModel extends ChangeNotifier {
 
   GoogleSignInAccount get user => _user!;
 
-  Future googleLogin() async {
-
-    try {
-      final googleUser = await googleSignIn.signIn();
-      if (googleUser == null) return;
-      _user = googleUser;
-      final googleAuth = await googleUser.authentication;
-      // Google認証の部分
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-
-      //クレデンシャル情報を受け取り、Firebaseでログイン
-      final userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
-
-      //userの情報取り出す
-      final user = userCredential.user;
-
-      if (user == null) {
-        print('ログインに失敗している');
-        return;
-      }
-
-      //uid取得
-      final uid = user.uid;
-
-      //Firestoreに追加
-      final doc = FirebaseFirestore.instance.collection('users').doc(uid);
-      await doc.set({
-        'name': user.displayName,
-        'email': user.email,
-        'uid': uid,
-      });
-
-      // Google認証を通過した後、Firebase側にログイン
-      await FirebaseAuth.instance.signInWithCredential(credential);
-    } catch (e) {
-      print(e.toString());
-    }
-    notifyListeners();
-  }
+  // Future googleLogin() async {
+  //
+  //   try {
+  //     final googleUser = await googleSignIn.signIn();
+  //     if (googleUser == null) return;
+  //     _user = googleUser;
+  //     final googleAuth = await googleUser.authentication;
+  //     // Google認証の部分
+  //     final credential = GoogleAuthProvider.credential(
+  //       accessToken: googleAuth.accessToken,
+  //       idToken: googleAuth.idToken,
+  //     );
+  //
+  //     //クレデンシャル情報を受け取り、Firebaseでログイン
+  //     final userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+  //
+  //     //userの情報取り出す
+  //     final user = userCredential.user;
+  //
+  //     if (user == null) {
+  //       print('ログインに失敗している');
+  //       return;
+  //     }
+  //
+  //     //uid取得
+  //     final uid = user!.uid;
+  //
+  //     //Firestoreに追加
+  //     final doc = FirebaseFirestore.instance.collection('users').doc(uid);
+  //     await doc.set({
+  //       'name': user.displayName,
+  //       'email': user.email,
+  //       'uid': uid,
+  //     });
+  //
+  //     // Google認証を通過した後、Firebase側にログイン
+  //     await FirebaseAuth.instance.signInWithCredential(credential);
+  //   } catch (e) {
+  //     print(e.toString());
+  //   }
+  //   notifyListeners();
+  // }
 
   Future<UserCredential> signInWithGoogle() async {
     //認証フローをトリガーします
@@ -86,6 +86,7 @@ class GoogleSigInModel extends ChangeNotifier {
     final user = userCredential.user;
     final uid = user!.uid;
 
+
     //userがnullだったたら、「ログインに失敗している」
     if (user == null) {
       print('ログインに失敗している');
@@ -102,7 +103,7 @@ class GoogleSigInModel extends ChangeNotifier {
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
-  Future appleLogin() async {
+  Future<UserCredential> appleLogin() async {
 
     final rawNonce = generateNonce();
 
@@ -118,9 +119,24 @@ class GoogleSigInModel extends ChangeNotifier {
       rawNonce: rawNonce,
     );
 
-    await FirebaseAuth.instance.signInWithCredential(oauthCredential);
-    print(appleCredential);
-    notifyListeners();
+    final userCredential = await FirebaseAuth.instance.signInWithCredential(oauthCredential);
+
+    final user = userCredential.user;
+    final uid = user!.uid;
+
+    if (user == null) {
+      print('ログインに失敗している');
+    }
+
+
+    //Firestoreに追加
+    final doc = FirebaseFirestore.instance.collection('users').doc(uid);
+    await doc.set({
+      'AppleLoginName': user.displayName,
+      'id': user.email,
+      'uid': uid,
+    });
+    return await FirebaseAuth.instance.signInWithCredential(oauthCredential);
   }
 
 
