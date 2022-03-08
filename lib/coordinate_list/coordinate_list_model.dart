@@ -8,10 +8,8 @@ class CoordinateListModel extends ChangeNotifier {
 
   final user = FirebaseAuth.instance.currentUser!;
   List<Coordinate>? coordinate;
-  List _blockedIds = [];
   bool isVisible = false;
 
-  String? displayName;
   String? height;
   String? tops;
   String? bottoms;
@@ -83,9 +81,14 @@ class CoordinateListModel extends ChangeNotifier {
   }
 
   Future blockUser(Coordinate coordinate) {
+    final uid = user.uid;
     return FirebaseFirestore.instance.collection('blocks')
-        .doc(coordinate.id).set(
+        .doc(uid).set(
       {
+        'name': user.displayName,
+        'email': user.email,
+        'uid': uid,
+
         'height' : height,
         'tops': tops,
         'bottoms': bottoms,

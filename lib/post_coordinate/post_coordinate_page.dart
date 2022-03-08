@@ -4,8 +4,6 @@ import 'package:minimal_coord/post_coordinate/post_coordnate_page.model.dart';
 import 'package:provider/provider.dart';
 
 class PostCoordinatePage extends StatelessWidget {
-  PostCoordinatePage();
-
 
   @override
   Widget build(BuildContext context) {

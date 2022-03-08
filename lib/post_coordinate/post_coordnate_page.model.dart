@@ -1,10 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class PostCoordinatePageModel extends ChangeNotifier {
+
+  String? email;
+  String? displayName;
 
   String? height;
   String? tops;
@@ -13,14 +18,29 @@ class PostCoordinatePageModel extends ChangeNotifier {
   String? shoes;
   String? accessories;
 
+  String? imgURL;
+  String? imgTopsURL;
+  String? imgBottomsURL;
+  String? imgOuterURL;
+  String? imgShoesURL;
+  String? imgAccessoriesURL;
+
   File? imageFile;
   File? topsImageFile;
   File? bottomsImageFile;
   File? outerImageFile;
   File? shoesImageFile;
   File? accessoriesImageFile;
+
   final picker = ImagePicker();
   bool isLoading = false;
+
+  final googleSignIn = GoogleSignIn();
+
+  GoogleSignInAccount? _user;
+
+  GoogleSignInAccount get user => _user!;
+
 
   void startLoading() {
     isLoading = true;
@@ -32,6 +52,7 @@ class PostCoordinatePageModel extends ChangeNotifier {
     notifyListeners();
   }
 
+
   Future addCoordinate() async {
 
     if (imageFile == null || imageFile == "") {
@@ -42,14 +63,26 @@ class PostCoordinatePageModel extends ChangeNotifier {
       throw 'tops画像が入力されていません';
     }
 
-    final doc = FirebaseFirestore.instance.collection('coordinate').doc();
+    final googleUser = await googleSignIn.signIn();
+    if (googleUser == null) return;
+    _user = googleUser;
+    final googleAuth = await googleUser.authentication;
 
-    String? imgURL;
-    String? imgTopsURL;
-    String? imgBottomsURL;
-    String? imgOuterURL;
-    String? imgShoesURL;
-    String? imgAccessoriesURL;
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    final userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+
+    final user = userCredential.user;
+    if (user == null) {
+      print('ログインに失敗している');
+      return;
+    }
+    final uid = user.uid;
+    final doc = FirebaseFirestore.instance.collection('coordinate').doc(uid);
+
 
     if (imageFile != null) {
       // storageにアップロード
@@ -99,9 +132,11 @@ class PostCoordinatePageModel extends ChangeNotifier {
       imgAccessoriesURL = await task.ref.getDownloadURL();
     }
 
-
     // Firestoreに追加
     await doc.set({
+      'name': user.displayName,
+      'email': user.email,
+
       'height' : height,
       'tops': tops,
       'bottoms': bottoms,

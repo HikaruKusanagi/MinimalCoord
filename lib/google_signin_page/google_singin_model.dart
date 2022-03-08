@@ -12,7 +12,6 @@ class GoogleSigInModel extends ChangeNotifier {
   String? Shoes = '';
   String? Accessorie = '';
   String? email;
-  String? password;
   String? displayName;
 
   final googleSignIn = GoogleSignIn();
@@ -22,27 +21,32 @@ class GoogleSigInModel extends ChangeNotifier {
   GoogleSignInAccount get user => _user!;
 
   Future googleLogin() async {
+
     try {
       final googleUser = await googleSignIn.signIn();
       if (googleUser == null) return;
       _user = googleUser;
       final googleAuth = await googleUser.authentication;
-      // ログイン時にユーザーのuidが作成される
       // Google認証の部分
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      final userCredential = await FirebaseAuth.instance.signInWithCredential(
-          credential);
 
+      //クレデンシャル情報を受け取り、Firebaseでログイン
+      final userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+
+      //userの情報取り出す
       final user = userCredential.user;
+
       if (user == null) {
         print('ログインに失敗している');
         return;
       }
+
+      //uid取得
       final uid = user.uid;
-      //SignIn時にuidを取得する
+
       //Firestoreに追加
       final doc = FirebaseFirestore.instance.collection('users').doc(uid);
       await doc.set({
@@ -56,11 +60,10 @@ class GoogleSigInModel extends ChangeNotifier {
     } catch (e) {
       print(e.toString());
     }
-
     notifyListeners();
   }
 
-  Future signInWithGoogle() async {
+  Future<UserCredential> signInWithGoogle() async {
     //認証フローをトリガーします
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
@@ -73,24 +76,30 @@ class GoogleSigInModel extends ChangeNotifier {
       idToken: googleAuth?.idToken,
     );
 
-    final userCredential = await FirebaseAuth.instance.signInWithCredential(
-        credential);
+    // 上記の公式ドキュメントの例の最終行を適当な変数で受ける。
+    // エディタでカーソルを合わせると `UserCredential` 型だとわかる。
+    final userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
 
+
+    // userCerendetial.user は nullable なのでチェックする。だめなら return
+    // null（= 未ログイン）なら何らかの理由で userCredential の生成に失敗している
     final user = userCredential.user;
     final uid = user!.uid;
+
+    //userがnullだったたら、「ログインに失敗している」
     if (user == null) {
       print('ログインに失敗している');
     }
+
     //Firestoreに追加
     final doc = FirebaseFirestore.instance.collection('users').doc(uid);
     await doc.set({
-      'name': user.displayName,
+      'googleLoginName': user.displayName,
       'email': user.email,
       'uid': uid,
     });
     //サインインしたら、UserCredentialを返します
-    await FirebaseAuth.instance.signInWithCredential(credential);
-    notifyListeners();
+    return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
   Future appleLogin() async {
