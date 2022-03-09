@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
@@ -110,13 +109,13 @@ class PostCoordinatePageModel extends ChangeNotifier {
       imgAccessoriesURL = await task.ref.getDownloadURL();
     }
 
-    final uid = FirebaseAuth.instance.currentUser!.uid;
+
     // Firestoreに追加
     return FirebaseFirestore.instance.collection('coordinate')
-        .doc(uid).set(
+        .doc().set(
         {
       'name': user.displayName,
-      'uid': uid,
+      // 'uid': '',
 
       'height' : height,
       'tops': tops,
