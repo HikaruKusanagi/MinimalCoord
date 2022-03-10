@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:minimal_coord/post_coordinate/post_coordinate_page.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class GoogleSigInModel extends ChangeNotifier {
@@ -85,6 +86,7 @@ class GoogleSigInModel extends ChangeNotifier {
 
       if (user == null) {
         print('ログインに失敗している');
+        return;
       }
 
       final uid = FirebaseAuth.instance.currentUser!.uid;

@@ -1,5 +1,6 @@
 class Coordinate {
   Coordinate(
+      this.uid,
       this.id,
       this.height,
       this.tops,
@@ -16,6 +17,8 @@ class Coordinate {
       this.imgAccessoriesURL,
       );
 
+
+  String uid;
   String id;
   String height;
   String tops;

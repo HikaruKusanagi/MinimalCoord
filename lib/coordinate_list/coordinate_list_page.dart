@@ -12,8 +12,7 @@ import 'package:provider/provider.dart';
 
 class CoordinateListPage extends StatelessWidget {
 
-  final uid = FirebaseAuth.instance.currentUser!.uid;
-  String? name;
+  // final uid = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
@@ -176,7 +175,7 @@ class CoordinateListPage extends StatelessWidget {
       ),
     );
   }
-    Future showConfirmDialog(BuildContext context, Coordinate coordinate, CoordinateListModel model,) {
+    Future showConfirmDialog(BuildContext context, Coordinate uid, CoordinateListModel model,) {
       return showDialog(
         context: context,
         barrierDismissible: false,
@@ -193,7 +192,7 @@ class CoordinateListPage extends StatelessWidget {
                 child: Text("はい"),
                 onPressed: () async {
                   // modelで削除
-                  await model.blockUser(coordinate);
+                  await model.blockUser(uid);
                   Navigator.pop(context);
                   final snackBar = SnackBar(
                     backgroundColor: Colors.black,

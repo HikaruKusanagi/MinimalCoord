@@ -6,10 +6,10 @@ import 'package:provider/provider.dart';
 
 class PostCoordinatePage extends StatelessWidget {
 
-  final uid = FirebaseAuth.instance.currentUser!.uid;
-
   @override
   Widget build(BuildContext context) {
+
+    final user = FirebaseAuth.instance.currentUser!.uid;
 
     return ChangeNotifierProvider<PostCoordinatePageModel>(
       create: (_) => PostCoordinatePageModel(),
