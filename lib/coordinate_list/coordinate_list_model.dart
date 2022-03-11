@@ -82,11 +82,11 @@ class CoordinateListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future blockUser(Coordinate uid) async {
+  Future blockUser(uid) async {
 
     final QuerySnapshot snapshot = await FirebaseFirestore.instance
-        .collection('coordinate')
-        .where('uid', isEqualTo: uid)
+        .collection('blocks')
+        .where('uid', isEqualTo: 'MmvE0YZ3VuXf0hzGhs2B2pOUSk42')
         .get();
 
     final List<Coordinate> coordinate = snapshot.docs.map((
@@ -131,11 +131,11 @@ class CoordinateListModel extends ChangeNotifier {
     notifyListeners();
 
     return FirebaseFirestore.instance.collection('blocks')
-        .doc().set(
+        .doc(uid).set(
       {
         'name': user.displayName,
         'email': user.email,
-        'uid': uid,
+        'uid' : uid,
 
         'height' : height,
         'tops': tops,
