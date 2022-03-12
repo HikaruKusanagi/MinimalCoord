@@ -12,11 +12,10 @@ import 'package:provider/provider.dart';
 
 class CoordinateListPage extends StatelessWidget {
 
-
   @override
   Widget build(BuildContext context) {
 
-    final uid = FirebaseAuth.instance.currentUser!.uid;
+    // final uid = FirebaseAuth.instance.currentUser!.uid;
     return ChangeNotifierProvider<CoordinateListModel>(
       create: (_) => CoordinateListModel()..fechCoordinateList(),
       child: Scaffold(
@@ -104,8 +103,13 @@ class CoordinateListPage extends StatelessWidget {
                                   style: ElevatedButton.styleFrom(
                                     primary: Colors.black,
                                   ),
-                                  onPressed: () async =>
-                                  await showConfirmDialog (context, coordinate, model),
+                                  onPressed: () async {
+                                    final userId = coordinate.uid;
+                                    print('userId; $userId');
+                                    await
+                                    model.blockUser(coordinate.uid);
+                                    // showConfirmDialog(context, coordinate, model, Coordinate);
+                                  }
                                 ),
                               ],
                             ),
@@ -176,7 +180,7 @@ class CoordinateListPage extends StatelessWidget {
       ),
     );
   }
-    Future showConfirmDialog(BuildContext context, Coordinate uid, CoordinateListModel model,) {
+    Future showConfirmDialog(BuildContext context, Coordinate uid, CoordinateListModel model, coordinate,) {
       return showDialog(
         context: context,
         barrierDismissible: false,
@@ -192,8 +196,7 @@ class CoordinateListPage extends StatelessWidget {
               TextButton(
                 child: Text("はい"),
                 onPressed: () async {
-                  // modelで削除
-                  await model.blockUser(uid);
+                  await model.blockUser(coordinate.uid);
                   Navigator.pop(context);
                   final snackBar = SnackBar(
                     backgroundColor: Colors.black,
