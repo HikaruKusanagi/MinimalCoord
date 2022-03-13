@@ -90,7 +90,7 @@ class CoordinateListModel extends ChangeNotifier {
       }
     );
     notifyListeners();
-  }
+  }z
 
   Future<void> blockUser2(uid) async {
     blockIds = uid;
