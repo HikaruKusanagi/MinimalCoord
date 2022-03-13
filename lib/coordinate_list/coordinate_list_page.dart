@@ -11,13 +11,13 @@ import 'package:minimal_coord/rule_page/rule_page.dart';
 import 'package:provider/provider.dart';
 
 class CoordinateListPage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-
-    // final uid = FirebaseAuth.instance.currentUser!.uid;
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    print('uid; $uid');
     return ChangeNotifierProvider<CoordinateListModel>(
-      create: (_) => CoordinateListModel()..fechCoordinateList(),
+      create: (_) =>
+      CoordinateListModel()..fechCoordinateList()..blockUser2(uid),
       child: Scaffold(
         appBar: AppBar(
             backgroundColor: Colors.white,
@@ -65,83 +65,85 @@ class CoordinateListPage extends StatelessWidget {
                 final List<Widget> widgets = coordinate
                     .map(
                       (coordinate) =>
-                      Card(
-                        color: Colors.white,
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(width: 170),
-                                ElevatedButton(
-                                  child: Text('通報',
-                                    style: TextStyle(
-                                      color: Colors.white,
+                      Visibility(
+                        visible: !(model.blockIds?.contains(coordinate.uid) ?? false),
+                        child: Card(
+                          color: Colors.white,
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(width: 170),
+                                  ElevatedButton(
+                                    child: Text('通報',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
                                     ),
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.black,
+                                    ),
+                                    onPressed: () =>
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ReportPage(
+                                                    coordinate.imgURL!
+                                                ),
+                                          ),
+                                        ),
                                   ),
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Colors.black,
-                                  ),
-                                  onPressed: () =>
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              ReportPage(
-                                                  coordinate.imgURL!
-                                              ),
+                                  SizedBox(width: 10),
+                                  ElevatedButton(
+                                      child: Text('ブロック',
+                                        style: TextStyle(
+                                          color: Colors.white,
                                         ),
                                       ),
-                                ),
-                                SizedBox(width: 10),
-                                ElevatedButton(
-                                  child: Text('ブロック',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.black,
+                                      ),
+                                      onPressed: () async {
+                                        final userId = coordinate.uid;
+                                        print('userId; $userId');
+                                        await blockUserDialog(
+                                            context, coordinate, model);
+                                      }
                                   ),
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Colors.black,
-                                  ),
-                                  onPressed: () async {
-                                    final userId = coordinate.uid;
-                                    print('userId; $userId');
-                                    await
-                                    model.blockUser(coordinate.uid);
-                                    // showConfirmDialog(context, coordinate, model, Coordinate);
-                                  }
-                                ),
-                              ],
-                            ),
-                            ListTile(
-                                title: coordinate.imgURL != null
-                                    ? Image.network(coordinate.imgURL!)
-                                    : null,
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          PostUserDetailPage(
-                                            coordinate.height,
-                                            coordinate.tops,
-                                            coordinate.bottoms,
-                                            coordinate.outer,
-                                            coordinate.shoes,
-                                            coordinate.accessories,
+                                ],
+                              ),
+                              ListTile(
+                                  title: coordinate.imgURL != null
+                                      ? Image.network(coordinate.imgURL!)
+                                      : null,
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            PostUserDetailPage(
+                                              coordinate.height,
+                                              coordinate.tops,
+                                              coordinate.bottoms,
+                                              coordinate.outer,
+                                              coordinate.shoes,
+                                              coordinate.accessories,
 
-                                            coordinate.imgURL!,
-                                            coordinate.imgTopsURL!,
-                                            coordinate.imgBottomsURL!,
-                                            coordinate.imgOuterURL!,
-                                            coordinate.imgShoesURL!,
-                                            coordinate.imgAccessoriesURL!,
-                                          ),
-                                    ),
-                                  );
-                                }
-                            ),
-                          ],
+                                              coordinate.imgURL!,
+                                              coordinate.imgTopsURL!,
+                                              coordinate.imgBottomsURL!,
+                                              coordinate.imgOuterURL!,
+                                              coordinate.imgShoesURL!,
+                                              coordinate.imgAccessoriesURL!,
+                                            ),
+                                      ),
+                                    );
+                                  }
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                 )
@@ -180,36 +182,40 @@ class CoordinateListPage extends StatelessWidget {
       ),
     );
   }
-    Future showConfirmDialog(BuildContext context, Coordinate uid, CoordinateListModel model, coordinate,) {
-      return showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (_) {
-          return AlertDialog(
-            title: Text("ブロックの確認"),
-            content: Text('この投稿ユーザーをブロックしますか？'),
-            actions: [
-              TextButton(
-                child: Text("いいえ"),
-                onPressed: () => Navigator.pop(context),
-              ),
-              TextButton(
-                child: Text("はい"),
-                onPressed: () async {
-                  await model.blockUser(coordinate.uid);
-                  Navigator.pop(context);
-                  final snackBar = SnackBar(
-                    backgroundColor: Colors.black,
-                    content: Text('投稿者をブロックしました'),
-                  );
-                  model.fechCoordinateList();
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                },
-              ),
-            ],
-          );
-          },
-      );
+
+  Future blockUserDialog(BuildContext context,
+      Coordinate coordinate,
+      CoordinateListModel model,) {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) {
+        return AlertDialog(
+          title: Text("ブロックの確認"),
+          content: Text('この投稿ユーザーをブロックしますか？'),
+          actions: [
+            TextButton(
+              child: Text("いいえ"),
+              onPressed: () => Navigator.pop(context),
+            ),
+            TextButton(
+              child: Text("はい"),
+              onPressed: () async {
+                final userId = coordinate.uid;
+                print('userId; $userId');
+                await model.blockUser(coordinate.uid);
+                Navigator.pop(context);
+                final snackBar = SnackBar(
+                  backgroundColor: Colors.black,
+                  content: Text('投稿者をブロックしました'),
+                );
+                model.fechCoordinateList();
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
-
