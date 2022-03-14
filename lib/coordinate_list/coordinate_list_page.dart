@@ -11,13 +11,14 @@ import 'package:minimal_coord/rule_page/rule_page.dart';
 import 'package:provider/provider.dart';
 
 class CoordinateListPage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     final uid = FirebaseAuth.instance.currentUser!.uid;
     print('uid; $uid');
     return ChangeNotifierProvider<CoordinateListModel>(
       create: (_) =>
-      CoordinateListModel()..fechCoordinateList()..blockUser2(uid),
+      CoordinateListModel()..fechCoordinateList()..blockList(),
       child: Scaffold(
         appBar: AppBar(
             backgroundColor: Colors.white,
