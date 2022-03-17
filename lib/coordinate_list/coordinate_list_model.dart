@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:minimal_coord/domain/block.dart';
 import 'package:minimal_coord/domain/coordinate.dart';
@@ -79,11 +80,12 @@ class CoordinateListModel extends ChangeNotifier {
 
 
 
-  Future<void> blockUser(uid) async {
+  Future<void> blockUser(userId) async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
     FirebaseFirestore.instance.collection('blocks')
-        .doc().set(
+        .doc(uid).set(
       {
-        'blockUserId' : uid,
+        'blockUserId' : userId,
       }
     );
     notifyListeners();

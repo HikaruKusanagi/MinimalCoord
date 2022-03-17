@@ -204,7 +204,7 @@ class CoordinateListPage extends StatelessWidget {
               onPressed: () async {
                 final userId = coordinate.uid;
                 print('userId; $userId');
-                await model.blockUser(coordinate.uid);
+                await model.blockUser(userId);
                 Navigator.pop(context);
                 final snackBar = SnackBar(
                   backgroundColor: Colors.black,
