@@ -7,7 +7,9 @@ import 'dart:io';
 
 class CoordinateListModel extends ChangeNotifier {
   List<Coordinate>? coordinate;
-  List<Block>? blockIds;
+  List<Block>? blockIds; // blockIdsを取得できるようにしたい。
+  List<String>? blockIds = ['MmvE0YZ3VuXf0hzGhs2B2pOUSk42'];
+  // bool isVisible = true;
   String? uid;
   String? height;
   String? tops;

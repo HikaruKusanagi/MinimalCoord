@@ -67,6 +67,8 @@ class CoordinateListPage extends StatelessWidget {
                     .map(
                       (coordinate) =>
                       Visibility(
+                        // containsを使用すると、blockIdsにcoordinateのuidが含まれているか、いないか
+                        //判別できる(trueかfalse)
                         visible: !(model.blockIds?.contains(coordinate.uid) ?? false),
                         child: Card(
                           color: Colors.white,
