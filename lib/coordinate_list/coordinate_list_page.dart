@@ -18,7 +18,7 @@ class CoordinateListPage extends StatelessWidget {
     print('uid; $uid');
     return ChangeNotifierProvider<CoordinateListModel>(
       create: (_) =>
-      CoordinateListModel()..fechCoordinateList()..blockList(),
+      CoordinateListModel()..fechCoordinateList()..blockList(uid),
       child: Scaffold(
         appBar: AppBar(
             backgroundColor: Colors.white,
@@ -151,6 +151,7 @@ class CoordinateListPage extends StatelessWidget {
                       ),
                 )
                     .toList();
+                model.blockList(uid);
                 return ListView(
                   children: widgets,
                 );

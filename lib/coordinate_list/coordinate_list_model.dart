@@ -1,15 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:minimal_coord/domain/block.dart';
 import 'package:minimal_coord/domain/coordinate.dart';
 import 'dart:io';
 
 class CoordinateListModel extends ChangeNotifier {
   List<Coordinate>? coordinate;
-  List<Block>? blockIds; // blockIdsを取得できるようにしたい。
-  List<String>? blockIds = ['MmvE0YZ3VuXf0hzGhs2B2pOUSk42'];
-  // bool isVisible = true;
+  List<String>? blockIds;
   String? uid;
   String? height;
   String? tops;
@@ -93,17 +90,19 @@ class CoordinateListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> blockList() async {
+  Future<void> blockList(uid) async {
     final QuerySnapshot snapshot =
-    await FirebaseFirestore.instance.collection('blocks').get();
+    await FirebaseFirestore.instance.collection('blocks')
+        .where('blockUserId', isNotEqualTo: uid) // 〜と等しくない
+        .get();
 
-    final List<Block> blockIds = snapshot.docs.map((
+    final List<String>? blockIds = snapshot.docs.map((
         DocumentSnapshot document) {
       Map<String, dynamic> data = document.data() as Map<String, dynamic>;
 
       final String blockUserId = data['blockUserId'];
-      return Block(
-        blockUserId,
+      return (
+        blockUserId
       );
     }).toList();
 
