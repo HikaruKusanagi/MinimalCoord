@@ -362,13 +362,12 @@ class PostCoordinatePage extends StatelessWidget {
                               model.endLoading();
                             }
                           },
-                          child: Text('Post',style: GoogleFonts.yuseiMagic(
-                            textStyle: const TextStyle(
+                          child: Text('投稿',style:
+                           TextStyle(
                               color: Colors.white,
-                              fontSize: 20,
+                              fontSize: 15,
                               fontWeight: FontWeight.bold,
                             ),
-                          ),
                           ),
                           style: ElevatedButton.styleFrom(
                             primary: Colors.black,

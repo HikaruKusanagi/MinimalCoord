@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minimal_coord/google_signin_page/google_singin_model.dart';
+import 'package:minimal_coord/rule_page/rule_page.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_button/sign_button.dart';
 
@@ -14,7 +15,7 @@ class GoogleSigInPage extends StatelessWidget {
       child: Scaffold(
         body: Column(
             children: [
-              const SizedBox(height: 250),
+              const SizedBox(height: 200),
               Flexible(
                 child: Column(
                   children: [
@@ -73,7 +74,26 @@ class GoogleSigInPage extends StatelessWidget {
                 );
               },
               ),
-              const SizedBox(height: 150),
+              Center(
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RulePage(),
+                      fullscreenDialog: true,
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    '利用規約',
+                    style: TextStyle(
+                      fontSize: 15,
+                        color: Colors.black
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 100),
             ]),
       ),
     );

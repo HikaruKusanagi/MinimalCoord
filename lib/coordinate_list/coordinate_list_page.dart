@@ -7,7 +7,6 @@ import 'package:minimal_coord/google_signin_page/google_singin_model.dart';
 import 'package:minimal_coord/post_coordinate/post_coordinate_page.dart';
 import 'package:minimal_coord/post_user_detail/post_user_detail_page.dart';
 import 'package:minimal_coord/report_page/report_page.dart';
-import 'package:minimal_coord/rule_page/rule_page.dart';
 import 'package:provider/provider.dart';
 
 class CoordinateListPage extends StatelessWidget {
@@ -37,15 +36,15 @@ class CoordinateListPage extends StatelessWidget {
             ),
             centerTitle: false,
             actions: [
-              IconButton(
-                  icon: const Icon(Icons.info),
-                  color: Colors.black,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => RulePage()),
-                    );
-                  }),
+              // IconButton(
+              //     icon: const Icon(Icons.account_box),
+              //     color: Colors.black,
+              //     onPressed: () {
+              //       Navigator.push(
+              //         context,
+              //         MaterialPageRoute(builder: (context) => BlockListPage()),
+              //       );
+              //     }),
               IconButton(
                   icon: const Icon(Icons.logout),
                   color: Colors.black,
@@ -187,7 +186,8 @@ class CoordinateListPage extends StatelessWidget {
     );
   }
 
-  Future blockUserDialog(BuildContext context,
+  Future blockUserDialog(
+      BuildContext context,
       Coordinate coordinate,
       CoordinateListModel model,) {
     return showDialog(
