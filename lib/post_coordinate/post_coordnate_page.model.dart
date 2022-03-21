@@ -57,7 +57,23 @@ class PostCoordinatePageModel extends ChangeNotifier {
     }
 
     if (topsImageFile == null || topsImageFile == "") {
-      throw 'tops画像が入力されていません';
+      throw 'Tops画像が入力されていません';
+    }
+
+    if (bottomsImageFile == null || bottomsImageFile == "") {
+      throw 'Bottomsが入力されていません';
+    }
+
+    if (outerImageFile == null || outerImageFile == "") {
+      throw 'Outerが入力されていません';
+    }
+
+    if (shoesImageFile == null || shoesImageFile == "") {
+      throw 'Shoesが入力されていません';
+    }
+
+    if (accessoriesImageFile == null || accessoriesImageFile == "") {
+      throw 'Accessoriesが入力されていません';
     }
 
     final doc = FirebaseFirestore.instance.collection('coordinate').doc();
@@ -110,17 +126,6 @@ class PostCoordinatePageModel extends ChangeNotifier {
       imgAccessoriesURL = await task.ref.getDownloadURL();
     }
 
-    // final googleUser = await googleSignIn.signIn();
-    // if (googleUser == null) return;
-    // _user = googleUser;
-    // final googleAuth = await googleUser.authentication;
-    // // Google認証の部分
-    // final credential = GoogleAuthProvider.credential(
-    //   accessToken: googleAuth.accessToken,
-    //   idToken: googleAuth.idToken,
-    // );
-    // final userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
-    // final user = userCredential.user;
     final uid = FirebaseAuth.instance.currentUser!.uid;
 
     // Firestoreに追加
