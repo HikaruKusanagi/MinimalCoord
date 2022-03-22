@@ -35,12 +35,6 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>Access to pick a photo</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Access to take a photo by camera</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Access to pick a photo</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -61,6 +55,12 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<true/>
+	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>コーディネートの画像のアップロードに使用します。</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app requires to add file to your camera</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app requires to add file to your photo library your microphone</string>
 </dict>
 </plist>
