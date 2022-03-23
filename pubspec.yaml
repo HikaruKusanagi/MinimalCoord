@@ -48,15 +48,16 @@ dependencies:
   webview_flutter: ^3.0.0
   flutter_slidable: ^1.2.0
   flutter_screenutil: ^5.3.1
+  flutter_native_splash: ^2.1.1
 
 flutter_native_splash:
-  image: "images/スプラッシュ画面.png"
+  image: "images/appstore.png"
   color: "#FFFFF"
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_native_splash: ^2.0.2
+
 
   flutter_localizations:
     sdk: flutter
