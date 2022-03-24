@@ -90,6 +90,7 @@ class CoordinateListModel extends ChangeNotifier {
     notifyListeners();
   }
 
+
   Future<void> blockList(uid) async {
     final QuerySnapshot snapshot =
     await FirebaseFirestore.instance.collection('blocks')

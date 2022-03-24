@@ -462,6 +462,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1+1"
+  shaky_animated_listview:
+    dependency: "direct main"
+    description:
+      name: shaky_animated_listview
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.5"
   sign_button:
     dependency: "direct main"
     description:

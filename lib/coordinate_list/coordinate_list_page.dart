@@ -8,6 +8,7 @@ import 'package:minimal_coord/post_coordinate/post_coordinate_page.dart';
 import 'package:minimal_coord/post_user_detail/post_user_detail_page.dart';
 import 'package:minimal_coord/report_page/report_page.dart';
 import 'package:provider/provider.dart';
+import 'package:shaky_animated_listview/animators/grid_animator.dart';
 
 class CoordinateListPage extends StatelessWidget {
 
@@ -55,106 +56,110 @@ class CoordinateListPage extends StatelessWidget {
                   }),
             ]
         ),
-        body: Center(
-          child: Consumer<CoordinateListModel>(
-              builder: (context, model, child) {
-                final List<Coordinate>? coordinate = model.coordinate;
-                if (coordinate == null) {
-                  return const CircularProgressIndicator();
-                }
-                final List<Widget> widgets = coordinate
-                    .map(
-                      (coordinate) =>
-                      Visibility(
-                        // containsを使用すると、blockIdsにcoordinateのuidが含まれているか、いないか
-                        //判別できる(trueかfalse)
-                        visible: !(model.blockIds?.contains(coordinate.uid) ?? false),
-                        child: Card(
-                          color: Colors.white,
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(width: 170),
-                                  ElevatedButton(
-                                    child: Text('通報',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Colors.black,
-                                    ),
-                                    onPressed: () =>
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                ReportPage(
-                                                    coordinate.imgURL!
-                                                ),
-                                          ),
-                                        ),
-                                  ),
-                                  SizedBox(width: 10),
-                                  ElevatedButton(
-                                      child: Text('ブロック',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Colors.black,
-                                      ),
-                                      onPressed: () async {
-                                        final userId = coordinate.uid;
-                                        print('userId; $userId');
-                                        await blockUserDialog(
-                                            context, coordinate, model);
-                                      }
-                                  ),
-                                ],
-                              ),
-                              ListTile(
-                                  title: coordinate.imgURL != null
-                                      ? Image.network(coordinate.imgURL!)
-                                      : null,
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            PostUserDetailPage(
-                                              coordinate.height,
-                                              coordinate.tops,
-                                              coordinate.bottoms,
-                                              coordinate.outer,
-                                              coordinate.shoes,
-                                              coordinate.accessories,
+        body: GridView.count(
+          crossAxisCount: 3,
+          children: List.generate(3, (i) => GridAnimatorWidget(
+                child: Consumer<CoordinateListModel>(
+                    builder: (context, model, child) {
+                      final List<Coordinate>? coordinate = model.coordinate;
+                      if (coordinate == null) {
+                        return const CircularProgressIndicator();
+                      }
+                      final List<Widget> widgets = coordinate
+                      .map(
+                        (coordinate) =>
+                        Visibility(
+                          // containsを使用すると、blockIdsにcoordinateのuidが含まれているか、いないか
+                          //判別できる(trueかfalse)
+                          visible: !(model.blockIds?.contains(coordinate.uid) ?? false),
+                          child: Card(
+                            color: Colors.grey,
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(width: 170),
+                                    // ElevatedButton(
+                                    //   child: Text('通報',
+                                    //     style: TextStyle(
+                                    //       color: Colors.white,
+                                    //     ),
+                                    //   ),
+                                    //   style: ElevatedButton.styleFrom(
+                                    //     primary: Colors.black,
+                                    //   ),
+                                    //   onPressed: () =>
+                                    //       Navigator.push(
+                                    //         context,
+                                    //         MaterialPageRoute(
+                                    //           builder: (context) =>
+                                    //               ReportPage(
+                                    //                   coordinate.imgURL!
+                                    //               ),
+                                    //         ),
+                                    //       ),
+                                    // ),
+                                    SizedBox(width: 10),
+                                    // ElevatedButton(
+                                    //     child: Text('ブロック',
+                                    //       style: TextStyle(
+                                    //         color: Colors.white,
+                                    //       ),
+                                    //     ),
+                                    //     style: ElevatedButton.styleFrom(
+                                    //       primary: Colors.black,
+                                    //     ),
+                                    //     onPressed: () async {
+                                    //       final userId = coordinate.uid;
+                                    //       print('userId; $userId');
+                                    //       await blockUserDialog(
+                                    //           context, coordinate, model);
+                                    //     }
+                                    // ),
+                                  ],
+                                ),
+                                ListTile(
+                                    title: coordinate.imgURL != null
+                                        ? Image.network(coordinate.imgURL!)
+                                        : null,
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              PostUserDetailPage(
+                                                coordinate.height,
+                                                coordinate.tops,
+                                                coordinate.bottoms,
+                                                coordinate.outer,
+                                                coordinate.shoes,
+                                                coordinate.accessories,
 
-                                              coordinate.imgURL!,
-                                              coordinate.imgTopsURL!,
-                                              coordinate.imgBottomsURL!,
-                                              coordinate.imgOuterURL!,
-                                              coordinate.imgShoesURL!,
-                                              coordinate.imgAccessoriesURL!,
-                                            ),
-                                      ),
-                                    );
-                                  }
-                              ),
-                            ],
+                                                coordinate.imgURL!,
+                                                coordinate.imgTopsURL!,
+                                                coordinate.imgBottomsURL!,
+                                                coordinate.imgOuterURL!,
+                                                coordinate.imgShoesURL!,
+                                                coordinate.imgAccessoriesURL!,
+                                              ),
+                                        ),
+                                      );
+                                    }
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                )
-                    .toList();
-                model.blockList(uid);
-                return ListView(
-                  children: widgets,
-                );
-              }),
+                  )
+                      .toList();
+                  model.blockList(uid);
+                  return ListView(
+                    children: widgets,
+                  );
+                }),
+              ),
+        ),
         ),
         floatingActionButton: Consumer<CoordinateListModel>(
             builder: (context, model, child) {
