@@ -56,136 +56,138 @@ class CoordinateListPage extends StatelessWidget {
                   }),
             ]
         ),
-        body: GridView.count(
-          crossAxisCount: 3,
-          children: List.generate(3, (i) => GridAnimatorWidget(
-                child: Consumer<CoordinateListModel>(
-                    builder: (context, model, child) {
-                      final List<Coordinate>? coordinate = model.coordinate;
-                      if (coordinate == null) {
-                        return const CircularProgressIndicator();
-                      }
-                      final List<Widget> widgets = coordinate
-                      .map(
-                        (coordinate) =>
-                        Visibility(
-                          // containsを使用すると、blockIdsにcoordinateのuidが含まれているか、いないか
-                          //判別できる(trueかfalse)
-                          visible: !(model.blockIds?.contains(coordinate.uid) ?? false),
-                          child: Card(
-                            color: Colors.grey,
-                            child: Column(
+        body: Consumer<CoordinateListModel>(
+            builder: (context, model, child) {
+              final List<Coordinate>? coordinate = model.coordinate;
+              if (coordinate == null) {
+                return const CircularProgressIndicator();
+              }
+              final List<Widget> widgets = coordinate
+                  .map(
+                    (coordinate) =>
+                    Visibility(
+                      // containsを使用すると、blockIdsにcoordinateのuidが含まれているか、いないか
+                      //判別できる(trueかfalse)
+                      visible: !(model.blockIds?.contains(coordinate.uid) ??
+                          false),
+                      child: Card(
+                        color: Colors.grey,
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SizedBox(width: 170),
-                                    // ElevatedButton(
-                                    //   child: Text('通報',
-                                    //     style: TextStyle(
-                                    //       color: Colors.white,
-                                    //     ),
-                                    //   ),
-                                    //   style: ElevatedButton.styleFrom(
-                                    //     primary: Colors.black,
-                                    //   ),
-                                    //   onPressed: () =>
-                                    //       Navigator.push(
-                                    //         context,
-                                    //         MaterialPageRoute(
-                                    //           builder: (context) =>
-                                    //               ReportPage(
-                                    //                   coordinate.imgURL!
-                                    //               ),
-                                    //         ),
-                                    //       ),
-                                    // ),
-                                    SizedBox(width: 10),
-                                    // ElevatedButton(
-                                    //     child: Text('ブロック',
-                                    //       style: TextStyle(
-                                    //         color: Colors.white,
-                                    //       ),
-                                    //     ),
-                                    //     style: ElevatedButton.styleFrom(
-                                    //       primary: Colors.black,
-                                    //     ),
-                                    //     onPressed: () async {
-                                    //       final userId = coordinate.uid;
-                                    //       print('userId; $userId');
-                                    //       await blockUserDialog(
-                                    //           context, coordinate, model);
-                                    //     }
-                                    // ),
-                                  ],
-                                ),
-                                ListTile(
-                                    title: coordinate.imgURL != null
-                                        ? Image.network(coordinate.imgURL!)
-                                        : null,
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              PostUserDetailPage(
-                                                coordinate.height,
-                                                coordinate.tops,
-                                                coordinate.bottoms,
-                                                coordinate.outer,
-                                                coordinate.shoes,
-                                                coordinate.accessories,
-
-                                                coordinate.imgURL!,
-                                                coordinate.imgTopsURL!,
-                                                coordinate.imgBottomsURL!,
-                                                coordinate.imgOuterURL!,
-                                                coordinate.imgShoesURL!,
-                                                coordinate.imgAccessoriesURL!,
-                                              ),
-                                        ),
-                                      );
-                                    }
-                                ),
+                                SizedBox(width: 170),
+                                // ElevatedButton(
+                                //   child: Text('通報',
+                                //     style: TextStyle(
+                                //       color: Colors.white,
+                                //     ),
+                                //   ),
+                                //   style: ElevatedButton.styleFrom(
+                                //     primary: Colors.black,
+                                //   ),
+                                //   onPressed: () =>
+                                //       Navigator.push(
+                                //         context,
+                                //         MaterialPageRoute(
+                                //           builder: (context) =>
+                                //               ReportPage(
+                                //                   coordinate.imgURL!
+                                //               ),
+                                //         ),
+                                //       ),
+                                // ),
+                                SizedBox(width: 10),
+                                // ElevatedButton(
+                                //     child: Text('ブロック',
+                                //       style: TextStyle(
+                                //         color: Colors.white,
+                                //       ),
+                                //     ),
+                                //     style: ElevatedButton.styleFrom(
+                                //       primary: Colors.black,
+                                //     ),
+                                //     onPressed: () async {
+                                //       final userId = coordinate.uid;
+                                //       print('userId; $userId');
+                                //       await blockUserDialog(
+                                //           context, coordinate, model);
+                                //     }
+                                // ),
                               ],
                             ),
-                          ),
+                            ListTile(
+                                title: coordinate.imgURL != null
+                                    ? SizedBox(
+                                    height: 100,
+                                    child: Image.network(coordinate.imgURL!))
+                                    : null,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          PostUserDetailPage(
+                                            coordinate.height,
+                                            coordinate.tops,
+                                            coordinate.bottoms,
+                                            coordinate.outer,
+                                            coordinate.shoes,
+                                            coordinate.accessories,
+
+                                            coordinate.imgURL!,
+                                            coordinate.imgTopsURL!,
+                                            coordinate.imgBottomsURL!,
+                                            coordinate.imgOuterURL!,
+                                            coordinate.imgShoesURL!,
+                                            coordinate.imgAccessoriesURL!,
+                                          ),
+                                    ),
+                                  );
+                                }
+                            ),
+                          ],
                         ),
-                  )
-                      .toList();
-                  model.blockList(uid);
-                  return ListView(
-                    children: widgets,
-                  );
-                }),
-              ),
-        ),
+                      ),
+                    ),
+              )
+                  .toList();
+              model.blockList(uid);
+              return GridAnimatorWidget(
+                child: GridView(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                  ),
+                  children: widgets,
+                ),
+              );}
         ),
         floatingActionButton: Consumer<CoordinateListModel>(
-            builder: (context, model, child) {
-              return SizedBox(
-                width: 70,
-                height: 70,
-                child: FloatingActionButton(
-                  backgroundColor: Colors.black,
-                  onPressed: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => PostCoordinatePage(),
-                          fullscreenDialog: true
-                      ),
-                    );
-                    //awaitつける事で、読み込まれるタイミングが変わる。
-                    model.fechCoordinateList();
-                  },
-                  tooltip: 'Increment',
-                  child: const Icon(Icons.photo,
-                      size: 40,
-                      color: Colors.white),
-                ),
-              );
-            }
+        builder: (context, model, child) {
+          return SizedBox(
+            width: 70,
+            height: 70,
+            child: FloatingActionButton(
+              backgroundColor: Colors.black,
+              onPressed: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PostCoordinatePage(),
+                      fullscreenDialog: true
+                  ),
+                );
+                //awaitつける事で、読み込まれるタイミングが変わる。
+                model.fechCoordinateList();
+                },
+              tooltip: 'Increment',
+              child: const Icon(Icons.photo,
+                  size: 40,
+                  color: Colors.white),
+            ),
+          );
+        }
         ),
       ),
     );
