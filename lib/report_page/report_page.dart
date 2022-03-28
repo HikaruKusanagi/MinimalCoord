@@ -4,10 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class ReportPage extends StatelessWidget {
-  ReportPage(
-      this.imgURL,
-      );
-  final  imgURL;
+
 
   @override
   Widget build(BuildContext context) {

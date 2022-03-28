@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minimal_coord/accessories_page/accessories_page.dart';
 import 'package:minimal_coord/bottmos_page/bottmos_page.dart';
+import 'package:minimal_coord/domain/coordinate.dart';
 import 'package:minimal_coord/outer_page/outer_page.dart';
 import 'package:minimal_coord/post_user_detail/post_user_detail.model.dart';
 import 'package:minimal_coord/shoes_page/shoes_page.dart';
@@ -11,7 +12,9 @@ import 'package:minimal_coord/wholebody/whole_body_page.dart';
 import 'package:provider/provider.dart';
 
 class PostUserDetailPage extends StatelessWidget {
+
   PostUserDetailPage(
+      this.uid,
       this.height,
       this.tops,
       this.bottoms,
@@ -26,6 +29,7 @@ class PostUserDetailPage extends StatelessWidget {
       this.imgShoesURL,
       this.imgAccessoriesURL,
       );
+  final  uid;
   final  height;
   final  tops;
   final  bottoms;
@@ -39,26 +43,41 @@ class PostUserDetailPage extends StatelessWidget {
   final  imgOuterURL;
   final  imgShoesURL;
   final  imgAccessoriesURL;
-
   final user = FirebaseAuth.instance.currentUser!;
+
+
 
   @override
   Widget build(BuildContext context) {
 
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    print('uid; $uid');
     return ChangeNotifierProvider<PostUserDetailModel>(
-      create: (_) => PostUserDetailModel(),
+      create: (_) => PostUserDetailModel()..fechCoordinateList()..blockList(uid),
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black,
-          title: Text('Coordinate', style: GoogleFonts.yuseiMagic(
-            textStyle: const TextStyle(
-              color: Colors.white,
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          ),
+          title: Column(
+            children: [
+              Text('Coordinate', style: GoogleFonts.yuseiMagic(
+                textStyle: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              ),
+          ]),
           centerTitle: false,
+          //   actions: [
+          // IconButton(
+          //     icon: Icon(Icons.person_off),
+          //     onPressed: () async {
+          //       // await blockUserDialog(
+          //       //     context, coordinate, model);
+          //     }
+          // ),
+          // ]
           ),
         body: SingleChildScrollView(
           child: Column(
@@ -100,7 +119,7 @@ class PostUserDetailPage extends StatelessWidget {
                 child: Column(
                   children: [
                     Consumer<PostUserDetailModel>(builder: (context, model, child) {
-                    return Row(
+                      return Row(
                       children: [
                         SizedBox(width: 10),
                         Column(
@@ -369,6 +388,43 @@ class PostUserDetailPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Future blockUserDialog(
+      BuildContext context,
+      Coordinate coordinate,
+      PostUserDetailModel model,) {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) {
+        return AlertDialog(
+          title: Text("ブロックの確認"),
+          content: Text('この投稿ユーザーをブロックしますか？'),
+          actions: [
+            TextButton(
+              child: Text("いいえ"),
+              onPressed: () => Navigator.pop(context),
+            ),
+            TextButton(
+              child: Text("はい"),
+              onPressed: () async {
+                final userId = coordinate.uid;
+                print('userId; $userId');
+                await model.blockUser(userId);
+                Navigator.pop(context);
+                final snackBar = SnackBar(
+                  backgroundColor: Colors.black,
+                  content: Text('投稿者をブロックしました'),
+                );
+                model.fechCoordinateList();
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
