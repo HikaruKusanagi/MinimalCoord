@@ -10,7 +10,7 @@ class PostCoordinatePage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final user = FirebaseAuth.instance.currentUser!.uid;
-
+    print('user; $user');
     return ChangeNotifierProvider<PostCoordinatePageModel>(
       create: (_) => PostCoordinatePageModel(),
       child: Scaffold(

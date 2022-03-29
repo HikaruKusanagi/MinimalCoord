@@ -1,4 +1,6 @@
+import 'package:card_swiper/card_swiper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minimal_coord/coordinate_list/coordinate_list_model.dart';
@@ -102,36 +104,40 @@ class CoordinateListPage extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Card(
-                            color: Colors.grey,
-                            child: ListTile(
-                                title: coordinate.imgURL != null
-                                    ? Image.network(coordinate.imgURL!)
-                                    : null,
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          PostUserDetailPage(
-                                            coordinate.uid,
-                                            coordinate.height,
-                                            coordinate.tops,
-                                            coordinate.bottoms,
-                                            coordinate.outer,
-                                            coordinate.shoes,
-                                            coordinate.accessories,
+                          SizedBox(
+                            height: 450,
+                            width: 450,
+                            child: Card(
+                              color: Colors.grey,
+                              child: ListTile(
+                                  title: coordinate.imgURL != null
+                                      ? Image.network(coordinate.imgURL!)
+                                      : null,
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            PostUserDetailPage(
+                                              coordinate.uid,
+                                              coordinate.height,
+                                              coordinate.tops,
+                                              coordinate.bottoms,
+                                              coordinate.outer,
+                                              coordinate.shoes,
+                                              coordinate.accessories,
 
-                                            coordinate.imgURL!,
-                                            coordinate.imgTopsURL!,
-                                            coordinate.imgBottomsURL!,
-                                            coordinate.imgOuterURL!,
-                                            coordinate.imgShoesURL!,
-                                            coordinate.imgAccessoriesURL!,
-                                          ),
-                                    ),
-                                  );
-                                }
+                                              coordinate.imgURL!,
+                                              coordinate.imgTopsURL!,
+                                              coordinate.imgBottomsURL!,
+                                              coordinate.imgOuterURL!,
+                                              coordinate.imgShoesURL!,
+                                              coordinate.imgAccessoriesURL!,
+                                            ),
+                                      ),
+                                    );
+                                  }
+                              ),
                             ),
                           ),
                         ],
@@ -140,12 +146,22 @@ class CoordinateListPage extends StatelessWidget {
               )
                   .toList();
               model.blockList(uid);
-              return ListView(
-                children: widgets,
+              return Swiper(
+                itemBuilder: (BuildContext context, int index) {
+                  return PageView(
+                    children: widgets,
+                  );
+                },
+                itemCount: 3,
+                scale: 0.9,
+                pagination: SwiperPagination(),
+                control: SwiperControl(
+                  color: Colors.black
+                ),
               );
             }),
         floatingActionButton: Consumer<CoordinateListModel>(
-        builder: (context, model, child) {
+          builder: (context, model, child) {
           return SizedBox(
             width: 70,
             height: 70,
@@ -168,9 +184,9 @@ class CoordinateListPage extends StatelessWidget {
                   color: Colors.white),
             ),
           );
-        }
+        },
         ),
-      ),
+    ),
     );
   }
   Future blockUserDialog(

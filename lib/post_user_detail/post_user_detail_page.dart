@@ -12,7 +12,6 @@ import 'package:minimal_coord/wholebody/whole_body_page.dart';
 import 'package:provider/provider.dart';
 
 class PostUserDetailPage extends StatelessWidget {
-
   PostUserDetailPage(
       this.uid,
       this.height,
@@ -50,8 +49,7 @@ class PostUserDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final uid = FirebaseAuth.instance.currentUser!.uid;
-    print('uid; $uid');
+
     return ChangeNotifierProvider<PostUserDetailModel>(
       create: (_) => PostUserDetailModel()..fechCoordinateList()..blockList(uid),
       child: Scaffold(
@@ -69,16 +67,37 @@ class PostUserDetailPage extends StatelessWidget {
               ),
           ]),
           centerTitle: false,
-          //   actions: [
-          // IconButton(
-          //     icon: Icon(Icons.person_off),
-          //     onPressed: () async {
-          //       // await blockUserDialog(
-          //       //     context, coordinate, model);
-          //     }
-          // ),
-          // ]
+            actions: [
+              Consumer<PostUserDetailModel>(
+                  builder: (context, model, child) {
+                    final List<Coordinate>? coordinate = model.coordinate;
+                    if (coordinate == null) {}
+                    (coordinate) =>
+                        IconButton(
+                            icon: Icon(Icons.person_off),
+                            color: Colors.white,
+                            onPressed: () async {
+                              final userId = coordinate.uid;
+                              print('userId; $userId');
+                              await blockUserDialog(
+                                  context, coordinate, model);
+                            }
+                            );
+                    return Column(
+                      children: [
+                        IconButton(
+                            icon: Icon(Icons.person_off),
+                            color: Colors.white,
+                            onPressed: () async {
+                              final userId = uid;
+                              print('userId; $userId');
+                              await blockUserDialog(
+                                  context, coordinate, model);
+                            }
           ),
+        ],
+      );
+    })]),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -393,7 +412,7 @@ class PostUserDetailPage extends StatelessWidget {
 
   Future blockUserDialog(
       BuildContext context,
-      Coordinate coordinate,
+      Coordinate,
       PostUserDetailModel model,) {
     return showDialog(
       context: context,
@@ -410,10 +429,10 @@ class PostUserDetailPage extends StatelessWidget {
             TextButton(
               child: Text("はい"),
               onPressed: () async {
-                final userId = coordinate.uid;
+                final userId = uid;
                 print('userId; $userId');
                 await model.blockUser(userId);
-                Navigator.pop(context);
+                Navigator.of(context).popUntil((route) => route.isFirst);
                 final snackBar = SnackBar(
                   backgroundColor: Colors.black,
                   content: Text('投稿者をブロックしました'),
