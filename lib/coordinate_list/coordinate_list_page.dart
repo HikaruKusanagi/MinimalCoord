@@ -14,15 +14,10 @@ import 'package:provider/provider.dart';
 class CoordinateListPage extends StatelessWidget {
 
 final controller = PageController(
-initialPage: 0,
+initialPage: 1,
 
 );
 
-
-final List<Widget> widgets =
-    [
-
-    ];
 
 
 @override
@@ -147,34 +142,19 @@ final List<Widget> widgets =
           )
               .toList();
           model.blockList(uid);
-          // return ListView.builder(
-          //     itemBuilder: (BuildContext context, int index) {
-          //       final coodinate = model.coordinate![index];
-          //       return Swiper(
-          //         itemBuilder: (BuildContext context, int index) {
-          //           return Image.network(coodinate.imgURL!, fit: BoxFit.cover,);
-          //           },
-          //         itemCount: model.coordinate!.length,
-          //         scale: 0.7,
-          //         viewportFraction: 0.8,
-          //         pagination: SwiperPagination(),
-          //       );
-          //     });
           return Swiper(
-            itemBuilder: (BuildContext context, int index) {
-              final coodinate = model.coordinate![index];
-              return InkWell(
-                onTap: ,
-                child: (
-                    Image.network(
-                        coodinate.imgURL!, fit: BoxFit.cover)
-                ),
-              );
-              },
+              itemBuilder: (BuildContext context, int index) {
+                print(index);
+                final coodinate = model.coordinate![index];
+                print(coodinate);
+                return Image.network(coodinate.imgURL!, fit: BoxFit.cover,);
+                },
             itemCount: model.coordinate!.length,
-            scale: 0.9,
+            scale: 0.7,
+            viewportFraction: 0.8,
             pagination: SwiperPagination(),
           );
+
         }),
         floatingActionButton: Consumer<CoordinateListModel>(
             builder: (context, model, child) {
