@@ -105,9 +105,10 @@ class GoogleSigInModel extends ChangeNotifier {
   }
 
 
-  Future logout() async {
+  Future logout(context) async {
     await googleSignIn.disconnect();
     FirebaseAuth.instance.signOut();
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 }
 

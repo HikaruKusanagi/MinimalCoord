@@ -17,7 +17,7 @@ class RulePage extends StatelessWidget {
               size: 20.0,
             ),
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.of(context).popUntil((route) => route.isFirst);
             },
           ),
           title: Text(

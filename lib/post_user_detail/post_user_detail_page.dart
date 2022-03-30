@@ -42,13 +42,11 @@ class PostUserDetailPage extends StatelessWidget {
   final  imgOuterURL;
   final  imgShoesURL;
   final  imgAccessoriesURL;
+
   final user = FirebaseAuth.instance.currentUser!;
-
-
 
   @override
   Widget build(BuildContext context) {
-
 
     return ChangeNotifierProvider<PostUserDetailModel>(
       create: (_) => PostUserDetailModel()..fechCoordinateList()..blockList(uid),
@@ -94,10 +92,10 @@ class PostUserDetailPage extends StatelessWidget {
                               await blockUserDialog(
                                   context, coordinate, model);
                             }
-          ),
-        ],
-      );
-    })]),
+                            ),
+                      ],
+                    );
+                  })]),
         body: SingleChildScrollView(
           child: Column(
             children: [
