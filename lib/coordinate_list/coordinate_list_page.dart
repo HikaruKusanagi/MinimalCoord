@@ -13,10 +13,7 @@ import 'package:provider/provider.dart';
 
 class CoordinateListPage extends StatelessWidget {
 
-final controller = PageController(
-initialPage: 1,
 
-);
 
 
 
@@ -24,6 +21,7 @@ initialPage: 1,
   Widget build(BuildContext context) {
     final uid = FirebaseAuth.instance.currentUser!.uid;
     print('uid; $uid');
+
     return ChangeNotifierProvider<CoordinateListModel>(
       create: (_) =>
       CoordinateListModel()..fechCoordinateList()..blockList(uid),
@@ -88,73 +86,46 @@ initialPage: 1,
         builder: (context, model, child) {
           final List<Coordinate>? coordinate = model.coordinate;
           if (coordinate == null) {
-            return const CircularProgressIndicator();
+            return Center(child: const CircularProgressIndicator(
+              color: Colors.black,
+            ));
           }
           final List<Widget> widgets = coordinate
               .map(
                 (coordinate) =>
-                Visibility(
-                  // containsを使用すると、blockIdsにcoordinateのuidが含まれているか、いないか
-                  //判別できる(trueかfalse)
-                  visible: !(model.blockIds?.contains(coordinate.uid) ??
-                      false),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 450,
-                        width: 450,
-                        child: Card(
-                          color: Colors.grey,
-                          child: ListTile(
-                              title: coordinate.imgURL != null
-                                  ? Image.network(coordinate.imgURL!)
-                                  : null,
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        PostUserDetailPage(
-                                          coordinate.uid,
-                                          coordinate.height,
-                                          coordinate.tops,
-                                          coordinate.bottoms,
-                                          coordinate.outer,
-                                          coordinate.shoes,
-                                          coordinate.accessories,
-
-                                          coordinate.imgURL!,
-                                          coordinate.imgTopsURL!,
-                                          coordinate.imgBottomsURL!,
-                                          coordinate.imgOuterURL!,
-                                          coordinate.imgShoesURL!,
-                                          coordinate.imgAccessoriesURL!,
-                                        ),
-                                  ),
-                                );
-                              }
+                    Visibility(
+                      // containsを使用すると、blockIdsにcoordinateのuidが含まれているか、いないか
+                      //判別できる(trueかfalse)
+                      visible: !(model.blockIds?.contains(coordinate.uid) ??
+                          false),
+                      child: Column(
+                        children: [
+                          Card(
+                            color: Colors.white,
+                            child: ListTile(
+                                title: coordinate.imgURL != null
+                                    ? Image.network(coordinate.imgURL!)
+                                    : null,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          PostUserDetailPage(
+                                           coordinate
+                                          ),
+                                    ),
+                                  );
+                                }
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
+                    ),
           )
               .toList();
           model.blockList(uid);
-          return Swiper(
-              itemBuilder: (BuildContext context, int index) {
-                print(index);
-                final coodinate = model.coordinate![index];
-                print(coodinate);
-                return Image.network(coodinate.imgURL!, fit: BoxFit.cover,);
-                },
-            itemCount: model.coordinate!.length,
-            scale: 0.7,
-            viewportFraction: 0.8,
-            pagination: SwiperPagination(),
-          );
-
+          return ListView(children: widgets);
         }),
         floatingActionButton: Consumer<CoordinateListModel>(
             builder: (context, model, child) {

@@ -7,7 +7,6 @@ import 'dart:io';
 class CoordinateListModel extends ChangeNotifier {
   List<Coordinate>? coordinate;
   List<String>? blockIds;
-  String? uid;
   String? height;
   String? tops;
   String? bottoms;
@@ -94,7 +93,7 @@ class CoordinateListModel extends ChangeNotifier {
   Future<void> blockList(uid) async {
     final QuerySnapshot snapshot =
     await FirebaseFirestore.instance.collection('blocks')
-        .where('blockUserId', isNotEqualTo: uid) // 〜と等しくない
+        .where('blockUserId', isNotEqualTo: null) // 〜と等しくない
         .get();
 
     final List<String>? blockIds = snapshot.docs.map((

@@ -17,7 +17,7 @@ class TopsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<CoordinateListModel>(
-      create: (_) => CoordinateListModel()..fechCoordinateList(),
+      create: (_) => CoordinateListModel(),
       child: Scaffold(
         appBar: AppBar(
         backgroundColor: Colors.black,

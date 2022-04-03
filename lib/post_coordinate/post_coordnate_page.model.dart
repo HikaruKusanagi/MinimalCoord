@@ -72,9 +72,9 @@ class PostCoordinatePageModel extends ChangeNotifier {
       throw 'Shoesが入力されていません';
     }
 
-    if (accessoriesImageFile == null || accessoriesImageFile == "") {
-      throw 'Accessoriesが入力されていません';
-    }
+    // if (accessoriesImageFile == null || accessoriesImageFile == "") {
+    //   throw 'Accessoriesが入力されていません';
+    // }
 
     final doc = FirebaseFirestore.instance.collection('coordinate').doc();
 

@@ -326,9 +326,11 @@ class PostCoordinatePage extends StatelessWidget {
                                 ),
                               ),
                               onTap: () async {
+                                  //画像が入っていたら
                                 await model.accessoriesImage();
-                              },
-                            ),
+                                Image.file(model.accessoriesImageFile!);
+                              }
+                              ),
                             Container(
                               width: 230,
                               child: TextField(
@@ -381,7 +383,7 @@ class PostCoordinatePage extends StatelessWidget {
                     Container(
                       height: 300,
                       width: 300,
-                      color: Colors.black54,
+                      color: Colors.black,
                       child: const Center(
                         child: CircularProgressIndicator(),
                       ),
