@@ -12,21 +12,17 @@ class CoordinateListModel extends ChangeNotifier {
   String? bottoms;
   String? outer;
   String? shoes;
-  String? accessories;
 
   String? imgURL;
   String? imgTopsURL;
   String? imgBottomsURL;
   String? imgOuterURL;
-  String? imgShoesURL;
-  String? imgAccessoriesURL;
 
   File? imageFile;
   File? topsImageFile;
   File? bottomsImageFile;
   File? outerImageFile;
   File? shoesImageFile;
-  File? accessoriesImageFile;
 
 
   //Firebaseと繋ぐ際はFutureを付ける
@@ -45,14 +41,12 @@ class CoordinateListModel extends ChangeNotifier {
       final String bottoms = data['bottoms'];
       final String outer = data['outer'];
       final String shoes = data['shoes'];
-      final String accessories = data['accessories'];
 
       final String? imgURL = data['imgURL'];
       final String? imgTopsURL = data['imgTopsURL'];
       final String? imgBottomsURL = data['imgBottomsURL'];
       final String? imgOuterURL = data['imgOuterURL'];
       final String? imgShoesURL = data['imgShoesURL'];
-      final String? imgAccessoriesURL = data['imgAccessoriesURL'];
       return Coordinate(
         uid,
         id,
@@ -61,14 +55,12 @@ class CoordinateListModel extends ChangeNotifier {
         bottoms,
         outer,
         shoes,
-        accessories,
 
         imgURL,
         imgTopsURL,
         imgBottomsURL,
         imgOuterURL,
         imgShoesURL,
-        imgAccessoriesURL,
       );
     }).toList();
 

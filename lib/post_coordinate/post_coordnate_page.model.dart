@@ -13,21 +13,18 @@ class PostCoordinatePageModel extends ChangeNotifier {
   String? bottoms;
   String? outer;
   String? shoes;
-  String? accessories;
 
   String? imgURL;
   String? imgTopsURL;
   String? imgBottomsURL;
   String? imgOuterURL;
   String? imgShoesURL;
-  String? imgAccessoriesURL;
 
   File? imageFile;
   File? topsImageFile;
   File? bottomsImageFile;
   File? outerImageFile;
   File? shoesImageFile;
-  File? accessoriesImageFile;
 
   final picker = ImagePicker();
   bool isLoading = false;
@@ -72,9 +69,6 @@ class PostCoordinatePageModel extends ChangeNotifier {
       throw 'Shoesが入力されていません';
     }
 
-    // if (accessoriesImageFile == null || accessoriesImageFile == "") {
-    //   throw 'Accessoriesが入力されていません';
-    // }
 
     final doc = FirebaseFirestore.instance.collection('coordinate').doc();
 
@@ -118,13 +112,6 @@ class PostCoordinatePageModel extends ChangeNotifier {
       imgShoesURL = await task.ref.getDownloadURL();
     }
 
-    if (accessoriesImageFile != null) {
-
-      final task = await FirebaseStorage.instance
-          .ref('coordinate/${doc.id}_accessories')
-          .putFile(accessoriesImageFile!);
-      imgAccessoriesURL = await task.ref.getDownloadURL();
-    }
 
     final uid = FirebaseAuth.instance.currentUser!.uid;
 
@@ -140,14 +127,12 @@ class PostCoordinatePageModel extends ChangeNotifier {
       'bottoms': bottoms,
       'outer': outer,
       'shoes': shoes,
-      'accessories': accessories,
 
       'imgURL': imgURL,
       'imgTopsURL': imgTopsURL,
       'imgBottomsURL' :imgBottomsURL,
       'imgOuterURL' : imgOuterURL,
       'imgShoesURL' : imgShoesURL,
-      'imgAccessoriesURL' : imgAccessoriesURL,
     });
   }
 
@@ -192,15 +177,6 @@ class PostCoordinatePageModel extends ChangeNotifier {
 
     if (pickedFile != null) {
       shoesImageFile = File(pickedFile.path);
-      notifyListeners();
-    }
-  }
-
-  Future accessoriesImage() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      accessoriesImageFile = File(pickedFile.path);
       notifyListeners();
     }
   }

@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:minimal_coord/accessories_page/accessories_page.dart';
 import 'package:minimal_coord/bottmos_page/bottmos_page.dart';
 import 'package:minimal_coord/domain/coordinate.dart';
 import 'package:minimal_coord/outer_page/outer_page.dart';
@@ -81,8 +80,8 @@ class PostUserDetailPage extends StatelessWidget {
                         SizedBox(height: 30),
                         GestureDetector(
                           child: SizedBox(
-                            height: 300,
-                            width: 300,
+                            height: 330,
+                            width: 330,
                             child: Container(
                               decoration: BoxDecoration(color: Colors.grey,
                                 borderRadius: BorderRadius.circular(10),
@@ -109,14 +108,39 @@ class PostUserDetailPage extends StatelessWidget {
                             ),
                           ),
                         ),
+                        SizedBox(
+                          width: 350,
+                          child: Row(
+                            children: [
+                              IconButton(
+                                  icon: const Icon(
+                                    Icons.star_border,
+                                    size: 30,
+                                  ),
+                                  onPressed:() {
+                                  }
+                              ),
+                              Row(
+                                children: [
+                                  IconButton(
+                                      icon: const Icon(
+                                          Icons.chat_bubble_outline,
+                                          size: 30),
+                                      onPressed:() {
+                                      }
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                         SizedBox(height: 20),
                         SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
                           child: Column(
                               children: [
                                 Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      SizedBox(width: 10),
                                       Column(
                                         children: [
                                           Text('Tops',
@@ -130,8 +154,8 @@ class PostUserDetailPage extends StatelessWidget {
                                           ),
                                           GestureDetector(
                                             child: SizedBox(
-                                              height: 100,
-                                              width: 100,
+                                              height: 150,
+                                              width: 150,
                                               child: InkWell(
                                                 onTap: () {
                                                   Navigator.push(
@@ -178,8 +202,8 @@ class PostUserDetailPage extends StatelessWidget {
                                               ),
                                               GestureDetector(
                                                 child: SizedBox(
-                                                  height: 100,
-                                                  width: 100,
+                                                  height: 150,
+                                                  width: 150,
                                                   child: InkWell(
                                                     onTap: () {
                                                       Navigator.push(
@@ -219,7 +243,7 @@ class PostUserDetailPage extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                      const SizedBox(width: 10),
+                                      const SizedBox(width: 30),
                                       Column(
                                         children: [
                                           Text(
@@ -234,8 +258,8 @@ class PostUserDetailPage extends StatelessWidget {
                                           ),
                                           GestureDetector(
                                             child: SizedBox(
-                                              height: 100,
-                                              width: 100,
+                                              height: 150,
+                                              width: 150,
                                               child: InkWell(
                                                 onTap: () {
                                                   Navigator.push(
@@ -270,68 +294,7 @@ class PostUserDetailPage extends StatelessWidget {
                                           ),
                                           ),
                                           const SizedBox(height: 10),
-                                          Column(
-                                            children: [
-                                              Text('Accessories',
-                                                style: GoogleFonts.yuseiMagic(
-                                                  textStyle: const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ),
-                                              GestureDetector(
-                                                child: SizedBox(
-                                                  height: 100,
-                                                  width: 100,
-                                                  child: InkWell(
-                                                    onTap: () {
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              AccessoriesPage(
-                                                                coordinate.accessories,
-                                                                coordinate.imgAccessoriesURL,
-                                                              ),
-                                                        ),
-                                                      );
-                                                    },
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.grey,
-                                                        borderRadius: BorderRadius
-                                                            .circular(10),
-                                                      ),
-                                                      child: Center(
-                                                        child:
-                                                            //画像が入っていたら
-                                                              Image.network(coordinate.imgAccessoriesURL!)
-                                                            //   SizedBox(
-                                                            //       height: 100,
-                                                            //       width: 100,
-                                                            //       child: Icon(Icons.add_a_photo,color: Colors.white)
-                                                            //   ),
 
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              Text(
-                                                coordinate.accessories,
-                                                style: const TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              SizedBox(height: 10),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
                                       SizedBox(width: 10),
                                       Column(
                                         children: [
@@ -346,8 +309,8 @@ class PostUserDetailPage extends StatelessWidget {
                                           ),
                                           GestureDetector(
                                             child: SizedBox(
-                                              height: 100,
-                                              width: 100,
+                                              height: 150,
+                                              width: 150,
                                               child: InkWell(
                                                 onTap: () {
                                                   Navigator.push(
@@ -382,33 +345,14 @@ class PostUserDetailPage extends StatelessWidget {
                                           ),
                                           ),
                                           SizedBox(height: 10),
-                                          Column(
-                                            children: [
-                                              Text('',
-                                                style: GoogleFonts.yuseiMagic(
-                                                  textStyle: const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ),
-                                              GestureDetector(
-                                                child: SizedBox(
-                                                  height: 100,
-                                                  width: 100,
-                                                ),
-                                              ),
-                                              SizedBox(height: 30),
-                                            ],
-                                          ),
+
                                         ],
                                       ),
                                     ],
                                 ),
                               ]),
-                        ),
-                      ]
+                        ]),
+                        )]
                   ),
           ),
       ),

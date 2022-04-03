@@ -40,6 +40,7 @@ class PostCoordinatePage extends StatelessWidget {
                           child: SizedBox(
                             height: 300,
                             width: 300,
+
                             child: model.imageFile != null
                                 ? Image.file(model.imageFile!)
                                 : Container(
@@ -240,7 +241,7 @@ class PostCoordinatePage extends StatelessWidget {
                           ],
                         ),
                         SizedBox(
-                          height: 20,
+                          height: 30,
                         ),
                         Row(
                           children: [
@@ -291,60 +292,6 @@ class PostCoordinatePage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          children: [
-                            Text('Accessories🧣',style: GoogleFonts.yuseiMagic(
-                              textStyle: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            GestureDetector(
-                              child: SizedBox(
-                                height: 100,
-                                width: 100,
-                                child: model.accessoriesImageFile != null
-                                    ? Image.file(model.accessoriesImageFile!)
-                                    : Container(
-                                  child: const Center(
-                                    child: Icon(Icons.add_a_photo,color: Colors.white,),
-                                  ),
-                                  color: Colors.grey,
-                                ),
-                              ),
-                              onTap: () async {
-                                  //画像が入っていたら
-                                await model.accessoriesImage();
-                                Image.file(model.accessoriesImageFile!);
-                              }
-                              ),
-                            Container(
-                              width: 230,
-                              child: TextField(
-                                maxLength: 7,
-                                decoration: const InputDecoration(
-                                  hintText: 'Accessories',
-                                ),
-                                onChanged: (text) {
-                                  model.accessories = text;
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
                         ElevatedButton(
                           onPressed: () async {
                             // 追加の処理
@@ -380,12 +327,11 @@ class PostCoordinatePage extends StatelessWidget {
                   ),
                   //読み込んでいる最中
                   if (model.isLoading)
-                    Container(
-                      height: 300,
-                      width: 300,
-                      color: Colors.black,
+                    Center(
                       child: const Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                 ],
