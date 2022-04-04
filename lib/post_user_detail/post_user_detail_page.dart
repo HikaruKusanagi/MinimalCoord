@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minimal_coord/bottmos_page/bottmos_page.dart';
@@ -11,15 +13,15 @@ import 'package:minimal_coord/wholebody/whole_body_page.dart';
 import 'package:provider/provider.dart';
 
 class PostUserDetailPage extends StatelessWidget {
+
   PostUserDetailPage(this.coordinate);
 
   final Coordinate coordinate;
 
 
-  final user = FirebaseAuth.instance.currentUser!;
-
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
 
     return ChangeNotifierProvider<PostUserDetailModel>(
       create: (_) => PostUserDetailModel()..fechCoordinateList()..blockList(coordinate.uid),
@@ -108,9 +110,10 @@ class PostUserDetailPage extends StatelessWidget {
                             ),
                           ),
                         ),
+                        SizedBox(height: 5),
                         SizedBox(
-                          width: 350,
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               IconButton(
                                   icon: const Icon(
@@ -131,6 +134,32 @@ class PostUserDetailPage extends StatelessWidget {
                                   ),
                                 ],
                               ),
+                              SizedBox(width: 100),
+                              Row(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 30,
+                                    backgroundImage: NetworkImage(user.photoURL!),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(width: 10),
+                              Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(user.displayName!),
+                                    ],
+                                  ),
+                                  SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      Text('160cm'),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              SizedBox(width: 40),
                             ],
                           ),
                         ),

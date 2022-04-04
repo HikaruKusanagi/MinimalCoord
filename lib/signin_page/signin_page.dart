@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:minimal_coord/google_signin_page/google_singin_model.dart';
 import 'package:minimal_coord/rule_page/rule_page.dart';
+import 'package:minimal_coord/signin_page/singin_model.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_button/sign_button.dart';
 
 
-class GoogleSigInPage extends StatelessWidget {
+class SigInPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<GoogleSigInModel>(
-      create: (_) => GoogleSigInModel(),
+    return ChangeNotifierProvider<SigInModel>(
+      create: (_) => SigInModel(),
       child: Scaffold(
         body: Column(
             children: [
@@ -52,7 +52,7 @@ class GoogleSigInPage extends StatelessWidget {
                   buttonSize: ButtonSize.small,
                   onPressed: () {
                     final provider =
-                    Provider.of<GoogleSigInModel>(context, listen: false);
+                    Provider.of<SigInModel>(context, listen: false);
                     provider.googleLogin();
                   },
                 );
@@ -67,7 +67,7 @@ class GoogleSigInPage extends StatelessWidget {
                       buttonSize: ButtonSize.small,
                       onPressed: () async {
                         final provider =
-                        Provider.of<GoogleSigInModel>(context, listen: false);
+                        Provider.of<SigInModel>(context, listen: false);
                         provider.appleLogin();
                         },
                     ),

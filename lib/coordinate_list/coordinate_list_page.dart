@@ -1,23 +1,23 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minimal_coord/coordinate_list/coordinate_list_model.dart';
 import 'package:minimal_coord/domain/coordinate.dart';
-import 'package:minimal_coord/google_signin_page/google_singin_model.dart';
+import 'package:minimal_coord/mypage/mypage.dart';
 import 'package:minimal_coord/post_coordinate/post_coordinate_page.dart';
 import 'package:minimal_coord/post_user_detail/post_user_detail_page.dart';
 import 'package:minimal_coord/rule_page/rule_page.dart';
+import 'package:minimal_coord/signin_page/singin_model.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CoordinateListPage extends StatelessWidget {
 
 
-
-
-
-@override
+  @override
   Widget build(BuildContext context) {
+  //初回ログイン時のみユーザーのプロフィール編集を行う
+  WidgetsBinding.instance!.addPostFrameCallback((_) => _firstTimeEditPage(context));
     final uid = FirebaseAuth.instance.currentUser!.uid;
     print('uid; $uid');
 
@@ -45,6 +45,24 @@ class CoordinateListPage extends StatelessWidget {
             actions: [
               PopupMenuButton(
                 itemBuilder: (context) => [
+                  PopupMenuItem(
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) =>
+                                MyPage(),
+                            ),
+                          );
+                        },
+                        child: Text('プロフィール',
+                        style: TextStyle(fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                          color: Colors.black,
+                        ),
+                        ),
+                      ),
+                  ),
                 PopupMenuItem(
                   child: TextButton(
                     onPressed: () {
@@ -174,7 +192,7 @@ class CoordinateListPage extends StatelessWidget {
             TextButton(
               child: Text("はい"),
               onPressed: () async {
-                final provider = Provider.of<GoogleSigInModel>(
+                final provider = Provider.of<SigInModel>(
                     context, listen: false);
                 provider.logout(context);
                 },
@@ -187,6 +205,25 @@ class CoordinateListPage extends StatelessWidget {
 }
 
 
+
+void _firstTimeEditPage(BuildContext context) async {
+  final pref = await SharedPreferences.getInstance();
+
+  if (pref.getBool('isAlreadyFirstLaunch') != true) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MyPage(),
+        fullscreenDialog: true,
+      ),
+    );
+    pref.setBool('isAlreadyFirstLaunch', true);
+  }
+}
+
+
+
+//今後アップデート用メモ
 // Image.network(coodinate.imgURL!, fit: BoxFit.cover,);
 // Swiper(
 // itemBuilder: (BuildContext context, int index) {

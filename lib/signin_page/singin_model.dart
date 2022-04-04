@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
-class GoogleSigInModel extends ChangeNotifier {
+class SigInModel extends ChangeNotifier {
 
   String? Tops = '';
   String? Bottoms = '';
@@ -95,9 +95,10 @@ class GoogleSigInModel extends ChangeNotifier {
       final doc = FirebaseFirestore.instance.collection('users').doc(uid);
       await doc.set({
         'AppleLogin': '',
-        'id': '',
+        'name': '',
         'uid': uid,
       });
+
       await FirebaseAuth.instance.signInWithCredential(oauthCredential);
     } catch (e) {
       print(e.toString());
