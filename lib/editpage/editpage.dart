@@ -1,23 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:minimal_coord/mypage/mypage_model.dart';
+import 'package:minimal_coord/editpage/editpage_model.dart';
 import 'package:provider/provider.dart';
 
-class MyPage extends StatelessWidget {
-
-
+class EditPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  return ChangeNotifierProvider<MyPageModel>(
-    create: (_) => MyPageModel(),
+  return ChangeNotifierProvider<EditPageModel>(
+    create: (_) => EditPageModel(),
     child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
             color: Colors.black,
             onPressed: () {
-              Navigator.of(context).popUntil((route) => route.isFirst);
+              Navigator.of(context).pop();
               },
           ),
           title: Text('プロフィール編集',
@@ -40,7 +38,7 @@ class MyPage extends StatelessWidget {
       backgroundColor: Colors.white.withOpacity(0.0),
       elevation: 0.0,
     ),
-      body: Consumer<MyPageModel>(
+      body: Consumer<EditPageModel>(
           builder: (context, model, child) {
             return SingleChildScrollView(
               child: Center(

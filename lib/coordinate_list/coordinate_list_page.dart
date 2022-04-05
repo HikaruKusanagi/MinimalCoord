@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minimal_coord/coordinate_list/coordinate_list_model.dart';
 import 'package:minimal_coord/domain/coordinate.dart';
-import 'package:minimal_coord/mypage/mypage.dart';
+import 'package:minimal_coord/editpage/editpage.dart';
+import 'package:minimal_coord/mypage/my_page.dart';
 import 'package:minimal_coord/post_coordinate/post_coordinate_page.dart';
 import 'package:minimal_coord/post_user_detail/post_user_detail_page.dart';
 import 'package:minimal_coord/rule_page/rule_page.dart';
@@ -100,47 +101,47 @@ class CoordinateListPage extends StatelessWidget {
               ),
             ]),
         body: Consumer<CoordinateListModel>(
-        builder: (context, model, child) {
-          final List<Coordinate>? coordinate = model.coordinate;
-          if (coordinate == null) {
-            return Center(child: const CircularProgressIndicator(
-              color: Colors.black,
-            ));
-          }
-          final List<Widget> widgets = coordinate
-              .map(
-                (coordinate) =>
-                    Visibility(
-                      // containsを使用すると、blockIdsにcoordinateのuidが含まれているか、いないか
-                      //判別できる(trueかfalse)
-                      visible: !(model.blockIds?.contains(coordinate.uid) ??
-                          false),
-                      child: Column(
-                        children: [
-                          Card(
-                            color: Colors.white,
-                            child: ListTile(
-                                title: coordinate.imgURL != null
-                                    ? Image.network(coordinate.imgURL!)
-                                    : null,
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          PostUserDetailPage(
-                                           coordinate
-                                          ),
+            builder: (context, model, child) {
+              final List<Coordinate>? coordinate = model.coordinate;
+              if (coordinate == null) {
+                return Center(child: const CircularProgressIndicator(
+                  color: Colors.black,
+                ));
+              }
+              final List<Widget> widgets = coordinate
+                  .map(
+                    (coordinate) =>
+                        Visibility(
+                          // containsを使用すると、blockIdsにcoordinateのuidが含まれているか、いないか
+                          // 判別できる(trueかfalse)
+                          visible: !(model.blockIds?.contains(coordinate.uid) ??
+                              false),
+                          child: Column(
+                            children: [
+                              Card(
+                                color: Colors.white,
+                                child: ListTile(
+                                    title: coordinate.imgURL != null
+                                        ? Image.network(coordinate.imgURL!)
+                                        : null,
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              PostUserDetailPage(
+                                                  coordinate
+                                              ),
+                                        ),
+                                      );
+                                    }
                                     ),
-                                  );
-                                }
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
-          )
-              .toList();
+                        ),
+              )
+                  .toList();
           model.blockList(uid);
           return ListView(children: widgets);
         }),
@@ -213,7 +214,7 @@ void _firstTimeEditPage(BuildContext context) async {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => MyPage(),
+        builder: (context) => EditPage(),
         fullscreenDialog: true,
       ),
     );
