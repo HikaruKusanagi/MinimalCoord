@@ -4,11 +4,13 @@ import 'package:minimal_coord/editpage/editpage_model.dart';
 import 'package:provider/provider.dart';
 
 class EditPage extends StatelessWidget {
+  EditPage(this.name);
+  final String name;
 
   @override
   Widget build(BuildContext context) {
   return ChangeNotifierProvider<EditPageModel>(
-    create: (_) => EditPageModel(),
+    create: (_) => EditPageModel(name),
     child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -25,19 +27,36 @@ class EditPage extends StatelessWidget {
             ),
           ),
           actions: [
-            TextButton(
-              onPressed:() {},
-              child: Text('決定',
-                style: TextStyle(
-                  fontSize: 13,
-                  color: Colors.black,
-            ),
-          ),
+            Consumer<EditPageModel>(
+                builder: (context, model, child) {
+                  return TextButton(
+                    onPressed: model.isUpdated()
+                        ? () async {
+                      try {
+                        await model.update();
+                        Navigator.of(context).pop();
+                      } catch (e) {
+                        final snackBar = SnackBar(
+                          backgroundColor: Colors.black,
+                          content: Text(e.toString()),
+                        );
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(snackBar);
+                      }
+                    }
+                    : null,
+                    child: Text('決定',
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.black,
+                      ),
+                    ),
+                  );
+                }),
+          ],
+          backgroundColor: Colors.white.withOpacity(0.0),
+          elevation: 0.0,
         ),
-      ],
-      backgroundColor: Colors.white.withOpacity(0.0),
-      elevation: 0.0,
-    ),
       body: Consumer<EditPageModel>(
           builder: (context, model, child) {
             return SingleChildScrollView(
@@ -62,7 +81,12 @@ class EditPage extends StatelessWidget {
                     SizedBox(
                       width: 330,
                       child: TextField(
-                        decoration: InputDecoration(),
+                        controller: model.nameController,
+                        decoration: const InputDecoration(hintText: '入力'
+                        ),
+                        onChanged: (text) {
+                          model.setName(text);
+                        },
                       ),
                     ),
                     SizedBox(height: 30),

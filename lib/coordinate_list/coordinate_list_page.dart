@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minimal_coord/coordinate_list/coordinate_list_model.dart';
 import 'package:minimal_coord/domain/coordinate.dart';
-import 'package:minimal_coord/editpage/editpage.dart';
 import 'package:minimal_coord/mypage/my_page.dart';
 import 'package:minimal_coord/post_coordinate/post_coordinate_page.dart';
 import 'package:minimal_coord/post_user_detail/post_user_detail_page.dart';
@@ -163,8 +162,8 @@ class CoordinateListPage extends StatelessWidget {
                   //awaitつける事で、読み込まれるタイミングが変わる。
                   model.fechCoordinateList();
                   },
-                tooltip: 'Increment',
-                child: const Icon(Icons.photo,
+                  tooltip: 'Increment',
+                  child: const Icon(Icons.photo,
                     size: 40,
                     color: Colors.white),
               ),
@@ -211,13 +210,13 @@ void _firstTimeEditPage(BuildContext context) async {
   final pref = await SharedPreferences.getInstance();
 
   if (pref.getBool('isAlreadyFirstLaunch') != true) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => EditPage(),
-        fullscreenDialog: true,
-      ),
-    );
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => EditPage(model.name!),
+    //     fullscreenDialog: true,
+    //   ),
+    // );
     pref.setBool('isAlreadyFirstLaunch', true);
   }
 }
