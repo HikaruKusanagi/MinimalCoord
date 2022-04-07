@@ -21,3 +21,4 @@ https://play.google.com/store/apps/details?id=com.hikaru.minimal_coord
 # MinimalCoord
 # MinimalCoord
 # MinimalCoord
+# MinimalCoord
