@@ -40,7 +40,7 @@ class MyPage extends StatelessWidget {
                       );
                       model.fetchUser();
                       },
-                    child: Text('編集',
+                    child: Text('編集！',
                       style: TextStyle(
                         fontSize: 13,
                         color: Colors.black,
