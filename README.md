@@ -13,3 +13,4 @@ https://apps.apple.com/jp/app/minimalcoord/id1609353352
 Android版 リリース
 https://play.google.com/store/apps/details?id=com.hikaru.minimal_coord 
 # MinimalCoord
+# MinimalCoord
