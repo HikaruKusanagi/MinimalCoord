@@ -1,5 +1,6 @@
 class Coordinate {
   Coordinate(
+      this.name,
       this.uid,
       this.id,
       this.height,
@@ -13,9 +14,13 @@ class Coordinate {
       this.imgBottomsURL,
       this.imgOuterURL,
       this.imgShoesURL,
+
+      this.isSelectedItem,
+      this.isSelectedItem2,
       );
 
 
+  String name;
   String uid;
   String id;
   String height;
@@ -29,4 +34,7 @@ class Coordinate {
   String? imgBottomsURL;
   String? imgOuterURL;
   String? imgShoesURL;
+
+  String? isSelectedItem;
+  String? isSelectedItem2;
 }

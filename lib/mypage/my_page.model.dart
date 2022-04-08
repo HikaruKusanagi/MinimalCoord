@@ -6,11 +6,10 @@ class MyPageModel extends ChangeNotifier {
 
   bool isLoading = false;
   String? name;
-  String? isSelectedItem;
-  String? isSelectedItem2;
   String? email;
   String? value;
-
+  String? isSelectedItem;
+  String? isSelectedItem2;
 
   void startLoading() {
     isLoading = true;

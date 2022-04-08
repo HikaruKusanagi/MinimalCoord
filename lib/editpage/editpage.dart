@@ -410,16 +410,16 @@ class EditPage extends StatelessWidget {
                         ),
                         SizedBox(width: 120),
                         SizedBox(
-                          width: 60,
+                          width: 90,
                           child: DropdownButton(
                             icon: Icon(Icons.expand_more),
                             items: const [
                               DropdownMenuItem(
-                                  child: Text('男性'),
-                                  value: '男性'),
+                                  child: Text('MEN'),
+                                  value: 'MEN'),
                               DropdownMenuItem(
-                                  child: Text('女性'),
-                                  value: '女性'),
+                                  child: Text('WOMEN'),
+                                  value: 'WOMEN'),
                             ],
                             onChanged: (String? value) {
                               model.isSelectedItem4(value);

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +23,7 @@ class PostUserDetailPage extends StatelessWidget {
     final user = FirebaseAuth.instance.currentUser!;
 
     return ChangeNotifierProvider<PostUserDetailModel>(
-      create: (_) => PostUserDetailModel()..fechCoordinateList()..blockList(coordinate.uid),
+      create: (_) => PostUserDetailModel()..fechCoordinateList()..blockList(coordinate.uid)..fetchUser(),
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black,
@@ -76,314 +75,315 @@ class PostUserDetailPage extends StatelessWidget {
                     );
                   }),
             ]),
-        body: SingleChildScrollView(
-                  child: Column(
-                      children: [
-                        SizedBox(height: 30),
-                        GestureDetector(
-                          child: SizedBox(
-                            height: 330,
-                            width: 330,
-                            child: Container(
-                              decoration: BoxDecoration(color: Colors.grey,
-                                borderRadius: BorderRadius.circular(10),
+        body: Consumer<PostUserDetailModel>(
+            builder: (context, model, child) {
+              return SingleChildScrollView(
+                child: Column(
+                    children: [
+                      SizedBox(height: 30),
+                      GestureDetector(
+                        child: SizedBox(
+                          height: 330,
+                          width: 330,
+                          child: Container(
+                            decoration: BoxDecoration(color: Colors.grey,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        WholeBodyPage(
+                                          coordinate.imgURL,
+                                        ),
                               ),
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          WholeBodyPage(
-                                            coordinate.imgURL,
-                                          ),
-                                    ),
-                                  );
-                                },
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: Image.network(coordinate.imgURL!),
-                                  ),
-                                ),
-                              ),
+                            );
+                          },
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Image.network(coordinate.imgURL!),
                             ),
                           ),
                         ),
-                        SizedBox(height: 5),
-                        SizedBox(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              IconButton(
-                                  icon: const Icon(
-                                    Icons.star_border,
-                                    size: 30,
-                                  ),
-                                  onPressed:() {
-                                  }
-                              ),
-                              Row(
-                                children: [
-                                  IconButton(
-                                      icon: const Icon(
-                                          Icons.chat_bubble_outline,
-                                          size: 30),
-                                      onPressed:() {
-                                      }
-                                  ),
-                                ],
-                              ),
-                              SizedBox(width: 100),
-                              Row(
-                                children: [
-                                  CircleAvatar(
-                                    radius: 30,
-                                    backgroundImage: NetworkImage(user.photoURL!),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(width: 10),
-                              Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(user.displayName!),
-                                    ],
-                                  ),
-                                  SizedBox(height: 5),
-                                  Row(
-                                    children: [
-                                      Text('160cm'),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              SizedBox(width: 40),
-                            ],
-                          ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  SizedBox(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(width: 100),
+                        Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 30,
+                              backgroundImage: NetworkImage(user.photoURL!),
+                            ),
+                          ],
                         ),
-                        SizedBox(height: 20),
-                        SingleChildScrollView(
-                          child: Column(
+                        SizedBox(width: 10),
+                        Column(
+                          children: [
+                            Row(
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Column(
-                                        children: [
-                                          Text('Tops',
-                                            style: GoogleFonts.yuseiMagic(
-                                              textStyle: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                          GestureDetector(
-                                            child: SizedBox(
-                                              height: 150,
-                                              width: 150,
-                                              child: InkWell(
-                                                onTap: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          TopsPage(
-                                                            coordinate.tops,
-                                                            coordinate.imgTopsURL,
-                                                          ),
+                                Text(coordinate.name),
+                              ],
+                            ),
+                            SizedBox(height: 5),
+                            Row(
+                              children: [
+                                SizedBox(width: 5),
+                                Text(coordinate.isSelectedItem2!),
+                                Container(
+                                  height: 20,
+                                  width: 5,
+                                  child: VerticalDivider(
+                                  color: Colors.grey,
+                                  ),
+                                ),
+                                SizedBox(width: 5),
+                                Text(coordinate.isSelectedItem! + 'cm'),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(width: 40),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  SingleChildScrollView(
+                    child: Column(
+                        children: [
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text('Tops',
+                                      style: GoogleFonts.yuseiMagic(
+                                        textStyle: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      child: SizedBox(
+                                        height: 150,
+                                        width: 150,
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    TopsPage(
+                                                      coordinate.tops,
+                                                      coordinate.imgTopsURL,
                                                     ),
-                                                  );
-                                                },
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.grey,
-                                                    borderRadius: BorderRadius
-                                                        .circular(10),
-                                                  ),
-                                                  child: Center(
-                                                    child: Image.network(coordinate.imgTopsURL!),
-                                                  ),
-                                                ),
                                               ),
+                                            );
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey,
+                                              borderRadius: BorderRadius
+                                                  .circular(10),
+                                            ),
+                                            child: Center(
+                                              child: Image.network(
+                                                  coordinate.imgTopsURL!),
                                             ),
                                           ),
-                                          Text(coordinate.tops, style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      coordinate.tops, style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    ),
+                                    SizedBox(height: 10),
+                                    Column(
+                                      children: [
+                                        Text('Shoes',
+                                          style: GoogleFonts.yuseiMagic(
+                                            textStyle: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
-                                          ),
-                                          SizedBox(height: 10),
-                                          Column(
-                                            children: [
-                                              Text('Shoes',
-                                                style: GoogleFonts.yuseiMagic(
-                                                  textStyle: const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ),
-                                              GestureDetector(
-                                                child: SizedBox(
-                                                  height: 150,
-                                                  width: 150,
-                                                  child: InkWell(
-                                                    onTap: () {
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              ShoesPage(
-                                                                coordinate.shoes,
-                                                                coordinate.imgShoesURL,
-                                                              ),
+                                        ),
+                                        GestureDetector(
+                                          child: SizedBox(
+                                            height: 150,
+                                            width: 150,
+                                            child: InkWell(
+                                              onTap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ShoesPage(
+                                                          coordinate.shoes,
+                                                          coordinate
+                                                              .imgShoesURL,
                                                         ),
-                                                      );
-                                                    },
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.grey,
-                                                        borderRadius: BorderRadius
-                                                            .circular(10),
-                                                      ),
-                                                      child: Center(
-                                                        child: Image.network(
-                                                            coordinate.imgShoesURL!),
-                                                      ),
-                                                    ),
                                                   ),
+                                                );
+                                              },
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey,
+                                                  borderRadius: BorderRadius
+                                                      .circular(10),
                                                 ),
-                                              ),
-                                              Text(
-                                                coordinate.shoes, style: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                              ),
-                                              const SizedBox(height: 10),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(width: 30),
-                                      Column(
-                                        children: [
-                                          Text(
-                                            'Bottmos',
-                                            style: GoogleFonts.yuseiMagic(
-                                              textStyle: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                          GestureDetector(
-                                            child: SizedBox(
-                                              height: 150,
-                                              width: 150,
-                                              child: InkWell(
-                                                onTap: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          BottmosPage(
-                                                            coordinate.bottoms,
-                                                            coordinate.imgBottomsURL,
-                                                          ),
-                                                    ),
-                                                  );
-                                                },
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.grey,
-                                                    borderRadius: BorderRadius
-                                                        .circular(10),
-                                                  ),
-                                                  child: Center(
-                                                    child: Image.network(
-                                                        coordinate.imgBottomsURL!),
-                                                  ),
+                                                child: Center(
+                                                  child: Image.network(
+                                                      coordinate.imgShoesURL!),
                                                 ),
                                               ),
                                             ),
                                           ),
-                                          Text(coordinate.bottoms, style: const TextStyle(
+                                        ),
+                                        Text(
+                                          coordinate.shoes,
+                                          style: const TextStyle(
                                             color: Colors.black,
                                             fontSize: 12,
                                             fontWeight: FontWeight.bold,
                                           ),
-                                          ),
-                                          const SizedBox(height: 10),
-
-                                      SizedBox(width: 10),
-                                      Column(
-                                        children: [
-                                          Text('Outer',
-                                            style: GoogleFonts.yuseiMagic(
-                                              textStyle: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
+                                        ),
+                                        const SizedBox(height: 10),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(width: 30),
+                                Column(
+                                  children: [
+                                    Text(
+                                      'Bottmos',
+                                      style: GoogleFonts.yuseiMagic(
+                                        textStyle: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      child: SizedBox(
+                                        height: 150,
+                                        width: 150,
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    BottmosPage(
+                                                      coordinate.bottoms,
+                                                      coordinate.imgBottomsURL,
+                                                    ),
                                               ),
+                                            );
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey,
+                                              borderRadius: BorderRadius
+                                                  .circular(10),
+                                            ),
+                                            child: Center(
+                                              child: Image.network(
+                                                  coordinate.imgBottomsURL!),
                                             ),
                                           ),
-                                          GestureDetector(
-                                            child: SizedBox(
-                                              height: 150,
-                                              width: 150,
-                                              child: InkWell(
-                                                onTap: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          OuterPage(
-                                                            coordinate.outer,
-                                                            coordinate.imgOuterURL,
-                                                          ),
-                                                    ),
-                                                  );
-                                                },
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.grey,
-                                                    borderRadius: BorderRadius
-                                                        .circular(10),
+                                        ),
+                                      ),
+                                    ),
+                                    Text(coordinate.bottoms,
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+
+                                    SizedBox(width: 10),
+                                    Column(
+                                      children: [
+                                        Text('Outer',
+                                          style: GoogleFonts.yuseiMagic(
+                                            textStyle: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        GestureDetector(
+                                          child: SizedBox(
+                                            height: 150,
+                                            width: 150,
+                                            child: InkWell(
+                                              onTap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        OuterPage(
+                                                          coordinate.outer,
+                                                          coordinate
+                                                              .imgOuterURL,
+                                                        ),
                                                   ),
-                                                  child: Center(
-                                                    child: Image.network(
-                                                        coordinate.imgOuterURL!),
-                                                  ),
+                                                );
+                                              },
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey,
+                                                  borderRadius: BorderRadius
+                                                      .circular(10),
+                                                ),
+                                                child: Center(
+                                                  child: Image.network(
+                                                      coordinate.imgOuterURL!),
                                                 ),
                                               ),
                                             ),
                                           ),
-                                          Text(coordinate.outer, style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          ),
-                                          SizedBox(height: 10),
+                                        ),
+                                        Text(coordinate.outer, style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        ),
+                                        SizedBox(height: 10),
 
-                                        ],
-                                      ),
-                                    ],
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ]),
                         ]),
-                        )]
-                  ),
-          ),
+                  )
+                ]
+            ),
+          );
+        }),
       ),
     );
   }

@@ -13,7 +13,7 @@ class EditPageModel extends ChangeNotifier {
   String? email;
   String? value;
   String? isSelectedItem = '150';
-  String? isSelectedItem2 = '男性';
+  String? isSelectedItem2 = 'MEN';
 
   void setName(String name) {
     this.name = name;
