@@ -35,6 +35,7 @@ class CoordinateListModel extends ChangeNotifier {
       Map<String, dynamic> data = document.data() as Map<String, dynamic>;
 
       final String name = data['name'];
+      final String photoURL = data['photoURL'];
       final String uid = data['uid'];
       final String id = document.id;
       final String height = data['height'];
@@ -52,8 +53,10 @@ class CoordinateListModel extends ChangeNotifier {
       final String?  isSelectedItem2 = data ['isSelectedItem2'];
       return Coordinate(
         name,
+        photoURL,
         uid,
         id,
+
         height,
         tops,
         bottoms,

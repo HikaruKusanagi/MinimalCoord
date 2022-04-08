@@ -1,14 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class PostCoordinatePageModel extends ChangeNotifier {
 
-  String? height;
   String? tops;
   String? bottoms;
   String? outer;
@@ -28,13 +26,6 @@ class PostCoordinatePageModel extends ChangeNotifier {
 
   final picker = ImagePicker();
   bool isLoading = false;
-
-  final googleSignIn = GoogleSignIn();
-
-  GoogleSignInAccount? _user;
-
-  GoogleSignInAccount get user => _user!;
-
 
   void startLoading() {
     isLoading = true;
@@ -119,20 +110,18 @@ class PostCoordinatePageModel extends ChangeNotifier {
     return FirebaseFirestore.instance.collection('coordinate')
         .doc().set(
         {
-      'name': '',
-      'uid': uid,
+          'uid': uid,
 
-      'height' : height,
-      'tops': tops,
-      'bottoms': bottoms,
-      'outer': outer,
-      'shoes': shoes,
+          'tops': tops,
+          'bottoms': bottoms,
+          'outer': outer,
+          'shoes': shoes,
 
-      'imgURL': imgURL,
-      'imgTopsURL': imgTopsURL,
-      'imgBottomsURL' :imgBottomsURL,
-      'imgOuterURL' : imgOuterURL,
-      'imgShoesURL' : imgShoesURL,
+          'imgURL': imgURL,
+          'imgTopsURL': imgTopsURL,
+          'imgBottomsURL' :imgBottomsURL,
+          'imgOuterURL' : imgOuterURL,
+          'imgShoesURL' : imgShoesURL,
     });
   }
 

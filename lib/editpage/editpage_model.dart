@@ -15,6 +15,7 @@ class EditPageModel extends ChangeNotifier {
   String? isSelectedItem = '150';
   String? isSelectedItem2 = 'MEN';
 
+
   void setName(String name) {
     this.name = name;
     notifyListeners();
@@ -35,11 +36,15 @@ class EditPageModel extends ChangeNotifier {
     notifyListeners();
   }
 
+
   Future update() async {
+    String? photoURL;
+
     this.name = nameController.text;
     final uid = FirebaseAuth.instance.currentUser!.uid;
     await FirebaseFirestore.instance.collection('users').doc(uid).update({
       'name': name,
+      'photoURLFile' : photoURL,
       'isSelectedItem': isSelectedItem,
       'isSelectedItem2': isSelectedItem2,
     });

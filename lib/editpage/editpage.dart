@@ -64,13 +64,7 @@ class EditPage extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(height: 30),
-                    CircleAvatar(
-                      radius: 50,
-                      backgroundImage: NetworkImage(''),
-                      backgroundColor: Colors.grey,
-                    ),
                     SizedBox(height: 30),
-                    Text('写真を選ぶ'),
                     Row(
                       children: [
                         SizedBox(width: 20),
@@ -100,9 +94,9 @@ class EditPage extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        SizedBox(width: 120),
+                        SizedBox(width: 110),
                         SizedBox(
-                          width: 55,
+
                           child: Column(
                             children: [
                               DropdownButton(
@@ -408,9 +402,8 @@ class EditPage extends StatelessWidget {
                             ],
                           ),
                         ),
-                        SizedBox(width: 120),
+                        SizedBox(width: 90),
                         SizedBox(
-                          width: 90,
                           child: DropdownButton(
                             icon: Icon(Icons.expand_more),
                             items: const [

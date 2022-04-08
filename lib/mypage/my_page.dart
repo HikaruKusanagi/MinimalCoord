@@ -59,11 +59,6 @@ class MyPage extends StatelessWidget {
                   child: Column(
                     children: [
                       SizedBox(height: 30),
-                      CircleAvatar(
-                        radius: 50,
-                        backgroundImage: NetworkImage(''),
-                        backgroundColor: Colors.grey,
-                      ),
                       SizedBox(height: 60),
                       Row(
                         children: [

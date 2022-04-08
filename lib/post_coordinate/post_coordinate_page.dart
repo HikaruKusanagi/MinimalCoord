@@ -59,36 +59,6 @@ class PostCoordinatePage extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            Text('Height🧍‍♀️',style: GoogleFonts.yuseiMagic(
-                              textStyle: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                              width: 230,
-                              child: TextField(
-                                keyboardType: TextInputType.number,
-                                maxLength: 3,
-                                decoration: const InputDecoration(
-                                  hintText: '身長',
-                                ),
-                                onChanged: (text) {
-                                  model.height = text;
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
                             Text('Tops👕',style: GoogleFonts.yuseiMagic(
                               textStyle: const TextStyle(
                                 color: Colors.black,

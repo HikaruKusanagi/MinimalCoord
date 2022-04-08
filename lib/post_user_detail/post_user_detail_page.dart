@@ -111,42 +111,34 @@ class PostUserDetailPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5),
+                  SizedBox(height: 10),
                   SizedBox(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        SizedBox(width: 100),
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 30,
-                              backgroundImage: NetworkImage(user.photoURL!),
-                            ),
-                          ],
-                        ),
-                        SizedBox(width: 10),
                         Column(
                           children: [
                             Row(
                               children: [
-                                Text(coordinate.name),
+                                Text(coordinate.name,style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
+                                ),
                               ],
                             ),
                             SizedBox(height: 5),
                             Row(
                               children: [
-                                SizedBox(width: 5),
-                                Text(coordinate.isSelectedItem2!),
+                                SizedBox(width: 10),
+                                Text(coordinate.isSelectedItem2!,style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
+                                ),
                                 Container(
                                   height: 20,
-                                  width: 5,
+                                  width: 10,
                                   child: VerticalDivider(
                                   color: Colors.grey,
                                   ),
                                 ),
-                                SizedBox(width: 5),
-                                Text(coordinate.isSelectedItem! + 'cm'),
+                                Text(coordinate.isSelectedItem! + 'cm' ,style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
+                                ),
                               ],
                             ),
                           ],
