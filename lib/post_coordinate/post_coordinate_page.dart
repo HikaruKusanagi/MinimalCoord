@@ -40,7 +40,6 @@ class PostCoordinatePage extends StatelessWidget {
                           child: SizedBox(
                             height: 300,
                             width: 300,
-
                             child: model.imageFile != null
                                 ? Image.file(model.imageFile!)
                                 : Container(
