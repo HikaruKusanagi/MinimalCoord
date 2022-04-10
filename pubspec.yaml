@@ -52,6 +52,8 @@ dependencies:
   shaky_animated_listview: ^0.0.5
   card_swiper: ^2.0.3
   shared_preferences: ^2.0.13
+  hooks_riverpod: ^1.0.3
+  flutter_hooks: ^0.18.3
 
 flutter_native_splash:
   image: "images/appstore.png"
