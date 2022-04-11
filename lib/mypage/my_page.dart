@@ -19,7 +19,7 @@ class MyPage extends StatelessWidget {
             },
           ),
           title: Consumer<MyPageModel>(builder: (context, model, child) {
-            return Text(model.name!,
+            return Text(model.name ?? 'NoName',
               style: TextStyle(color: Colors.black,
                 fontSize: 15,
                 fontWeight: FontWeight.bold,

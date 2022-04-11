@@ -1,14 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:minimal_coord/domain/coordinate.dart';
 import 'dart:io';
 
 
-final  CoordinateListProvider = ChangeNotifierProvider(
-    (ref) => CoordinateListModel(),
-);
 
 class CoordinateListModel extends ChangeNotifier {
   List<Coordinate>? coordinate;
@@ -41,7 +37,6 @@ class CoordinateListModel extends ChangeNotifier {
       Map<String, dynamic> data = document.data() as Map<String, dynamic>;
 
       final String name = data['name'];
-      final String photoURL = data['photoURL'];
       final String uid = data['uid'];
       final String id = document.id;
       final String height = data['height'];
@@ -59,7 +54,6 @@ class CoordinateListModel extends ChangeNotifier {
       final String?  isSelectedItem2 = data ['isSelectedItem2'];
       return Coordinate(
         name,
-        photoURL,
         uid,
         id,
 

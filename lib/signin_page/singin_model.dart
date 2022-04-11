@@ -2,20 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
-final  SigInProvider = ChangeNotifierProvider(
-      (ref) => SigInModel(),
-);
 
 class SigInModel extends ChangeNotifier {
 
-  String? Tops = '';
-  String? Bottoms = '';
-  String? Outer = '';
-  String? Shoes = '';
-  String? Accessorie = '';
   String? email;
   String? AppleLoginName;
 
@@ -101,7 +92,10 @@ class SigInModel extends ChangeNotifier {
       await doc.set({
         'AppleLogin': '',
         'name': '',
+        'email': '',
         'uid': uid,
+        'isSelectedItem' : '',
+        'isSelectedItem2' : '',
       });
 
       await FirebaseAuth.instance.signInWithCredential(oauthCredential);

@@ -8,7 +8,6 @@ class PostUserDetailModel extends ChangeNotifier {
   List<String>? blockIds;
   String? name;
   String? email;
-  String? photoURL;
   String? isSelectedItem;
   String? isSelectedItem2;
 
@@ -21,7 +20,6 @@ class PostUserDetailModel extends ChangeNotifier {
       Map<String, dynamic> data = document.data() as Map<String, dynamic>;
 
       final String name = data['name'];
-      final String photoURL = data['photoURL'];
       final String uid = data['uid'];
       final String id = document.id;
       final String height = data['height'];
@@ -40,7 +38,6 @@ class PostUserDetailModel extends ChangeNotifier {
       final String? isSelectedItem2 = data['isSelectedItem2'];
       return Coordinate(
         name,
-        photoURL,
         uid,
         id,
         height,

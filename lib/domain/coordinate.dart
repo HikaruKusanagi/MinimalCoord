@@ -1,7 +1,6 @@
 class Coordinate {
   Coordinate(
       this.name,
-      this.photoURL,
       this.uid,
       this.id,
       this.height,
@@ -22,7 +21,6 @@ class Coordinate {
 
 
   String name;
-  String photoURL;
   String uid;
   String id;
   String height;

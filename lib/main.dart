@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:minimal_coord/home_page/home_page.dart';
 import 'package:minimal_coord/signin_page/singin_model.dart';
+import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 
@@ -9,20 +9,17 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(
-      ProviderScope(
-        child: MyApp(),
-      ),
+    MyApp(),
   );
 }
 
-class MyApp extends HookConsumerWidget {
+class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final _provider = ref.watch(SigInProvider);
-    (context) => SigInModel();
-    return MaterialApp(
+  Widget build(BuildContext context) => ChangeNotifierProvider(
+    create: (context) => SigInModel(),
+    child: MaterialApp(
       debugShowCheckedModeBanner: false,
       home: HomePage(),
-    );
-  }
+    ),
+  );
 }

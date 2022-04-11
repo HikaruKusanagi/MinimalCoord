@@ -44,7 +44,6 @@ class EditPageModel extends ChangeNotifier {
     final uid = FirebaseAuth.instance.currentUser!.uid;
     await FirebaseFirestore.instance.collection('users').doc(uid).update({
       'name': name,
-      'photoURLFile' : photoURL,
       'isSelectedItem': isSelectedItem,
       'isSelectedItem2': isSelectedItem2,
     });
