@@ -4,22 +4,12 @@ import 'package:flutter/material.dart';
 
 class MyPageModel extends ChangeNotifier {
 
-  bool isLoading = false;
   String? name;
   String? email;
   String? value;
   String? isSelectedItem;
   String? isSelectedItem2;
 
-  void startLoading() {
-    isLoading = true;
-    notifyListeners();
-  }
-
-  void endLoading() {
-    isLoading = false;
-    notifyListeners();
-  }
 
   void fetchUser() async {
     final user = FirebaseAuth.instance.currentUser;

@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:minimal_coord/coordinate_list/coordinate_list_page.dart';
-import 'package:minimal_coord/rule_page/rule_page.dart';
 import 'package:minimal_coord/signin_page/signin_page.dart';
 
 class HomePage extends StatelessWidget {
