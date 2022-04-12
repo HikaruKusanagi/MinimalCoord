@@ -15,7 +15,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => ChangeNotifierProvider (
+  Widget build(BuildContext context) => ChangeNotifierProvider(
     create: (context) => SigInModel(),
     child:  MaterialApp(
       debugShowCheckedModeBanner: false,

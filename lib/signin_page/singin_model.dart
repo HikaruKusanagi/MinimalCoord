@@ -6,6 +6,10 @@ import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 
+final sigInProvider = ChangeNotifierProvider<SigInModel>(
+      create: (ref) => SigInModel(),
+);
+
 class SigInModel extends ChangeNotifier {
 
   String? email;
