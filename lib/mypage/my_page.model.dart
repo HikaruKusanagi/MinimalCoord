@@ -7,8 +7,8 @@ class MyPageModel extends ChangeNotifier {
   String? name;
   String? email;
   String? value;
-  String? isSelectedItem;
-  String? isSelectedItem2;
+  String isSelectedItem = 'null';
+  String isSelectedItem2 = 'null';
 
 
   void fetchUser() async {

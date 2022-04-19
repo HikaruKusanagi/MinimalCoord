@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:minimal_coord/editpage/editpage.dart';
 import 'package:minimal_coord/mypage/my_page.model.dart';
@@ -71,14 +72,14 @@ class MyPage extends StatelessWidget {
                       Row(
                         children: [
                           SizedBox(width: 100),
-                          Text(model.isSelectedItem!,
+                          Text(model.isSelectedItem,
                             style: TextStyle(
                               fontSize: 15,
                               color: Colors.black,
                             ),
                           ),
                           SizedBox(width: 150),
-                          Text(model.isSelectedItem2!,
+                          Text(model.isSelectedItem2,
                             style: TextStyle(
                               fontSize: 15,
                               color: Colors.black,
