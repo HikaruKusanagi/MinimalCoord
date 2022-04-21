@@ -3,13 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MyPageModel extends ChangeNotifier {
-
   String? name;
   String? email;
   String? value;
   String isSelectedItem = 'null';
   String isSelectedItem2 = 'null';
-
 
   void fetchUser() async {
     final user = FirebaseAuth.instance.currentUser;
@@ -17,7 +15,7 @@ class MyPageModel extends ChangeNotifier {
 
     final uid = FirebaseAuth.instance.currentUser!.uid;
     final snapshot =
-    await FirebaseFirestore.instance.collection('users').doc(uid).get();
+        await FirebaseFirestore.instance.collection('users').doc(uid).get();
     final data = snapshot.data();
     this.name = data?['name'];
     this.isSelectedItem = data?['isSelectedItem'];

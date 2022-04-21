@@ -12,9 +12,8 @@ class EditPageModel extends ChangeNotifier {
   String? name;
   String? email;
   String? value;
-  String? isSelectedItem = '150';
-  String? isSelectedItem2 = 'MEN';
-
+  String? height = '150';
+  String? sex = 'MEN';
 
   void setName(String name) {
     this.name = name;
@@ -25,31 +24,22 @@ class EditPageModel extends ChangeNotifier {
     return name != null;
   }
 
-  void isSelectedItem3(value) {
-    isSelectedItem = value;
+  void Height(value) {
+    height = value;
     notifyListeners();
   }
 
-
-  void isSelectedItem4(value) {
-    isSelectedItem2 = value;
+  void Sex(value) {
+    sex = value;
     notifyListeners();
   }
 
-
-  Future update() async {
-    String? photoURL;
-
-    this.name = nameController.text;
+  Future userUpdate() async {
     final uid = FirebaseAuth.instance.currentUser!.uid;
     await FirebaseFirestore.instance.collection('users').doc(uid).update({
       'name': name,
-      'isSelectedItem': isSelectedItem,
-      'isSelectedItem2': isSelectedItem2,
+      'sex': sex,
+      'height': height,
     });
   }
 }
-
-
-
-

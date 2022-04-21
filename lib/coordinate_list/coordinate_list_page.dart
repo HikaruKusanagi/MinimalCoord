@@ -12,18 +12,18 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CoordinateListPage extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
-  //初回ログイン時のみユーザーのプロフィール編集を行う
-  WidgetsBinding.instance!.addPostFrameCallback((_) => _firstTimeEditPage(context));
+    //初回ログイン時のみユーザーのプロフィール編集を行う
+    WidgetsBinding.instance!
+        .addPostFrameCallback((_) => _firstTimeEditPage(context));
     final uid = FirebaseAuth.instance.currentUser!.uid;
     print('uid; $uid');
 
     return ChangeNotifierProvider<CoordinateListModel>(
-      create: (_) =>
-      CoordinateListModel()..fechCoordinateList()..blockList(uid),
+      create: (_) => CoordinateListModel()
+        ..fechCoordinateList()
+        ..blockList(uid),
       child: Scaffold(
         appBar: AppBar(
             foregroundColor: Colors.black,
@@ -31,13 +31,15 @@ class CoordinateListPage extends StatelessWidget {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('TimeLine', style: GoogleFonts.yuseiMagic(
-                  textStyle: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
+                Text(
+                  'TimeLine',
+                  style: GoogleFonts.yuseiMagic(
+                    textStyle: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
                 ),
               ],
             ),
@@ -45,137 +47,130 @@ class CoordinateListPage extends StatelessWidget {
             actions: [
               PopupMenuButton(
                 itemBuilder: (context) => [
-                  PopupMenuItem(
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) =>
-                                MyPage(),
-                            ),
-                          );
-                        },
-                        child: Text('プロフィール',
-                        style: TextStyle(fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                          color: Colors.black,
-                        ),
-                        ),
-                      ),
-                  ),
-                PopupMenuItem(
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                        MaterialPageRoute(builder: (context) =>
-                            RulePage(),
-                        ),
-                      );
-                    },
-                    child: Text('お問い合わせ',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                          color: Colors.black
-                      ),
-                    ),
-                  ),
-                ),
+                  //　アプリアップデートで追加予定
+                  // PopupMenuItem(
+                  //     child: TextButton(
+                  //       onPressed: () {
+                  //         Navigator.push(
+                  //           context,
+                  //           MaterialPageRoute(builder: (context) =>
+                  //               MyPage(),
+                  //           ),
+                  //         );
+                  //       },
+                  //       child: Text('プロフィール',
+                  //       style: TextStyle(fontWeight: FontWeight.bold,
+                  //         fontSize: 13,
+                  //         color: Colors.black,
+                  //       ),
+                  //       ),
+                  //     ),
+                  // ),
                   PopupMenuItem(
                     child: TextButton(
-                      onPressed: () async {
-                          await LogOutDialog(context);
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RulePage(),
+                          ),
+                        );
                       },
-                      child: Text('ログアウト',
+                      child: Text(
+                        'お問い合わせ',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 13,
-                            color: Colors.black
-                        ),
+                            color: Colors.black),
+                      ),
+                    ),
+                  ),
+                  PopupMenuItem(
+                    child: TextButton(
+                      onPressed: () async {
+                        await LogOutDialog(context);
+                      },
+                      child: Text(
+                        'ログアウト',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                            color: Colors.black),
                       ),
                     ),
                   ),
                 ],
               ),
             ]),
-        body: Consumer<CoordinateListModel>(
-            builder: (context, model, child) {
-              final List<Coordinate>? coordinate = model.coordinate;
-              if (coordinate == null) {
-                return Center(child: const CircularProgressIndicator(
-                  color: Colors.black,
-                ));
-              }
-              final List<Widget> widgets = coordinate
-                  .map(
-                    (coordinate) =>
-                        Visibility(
-                          // containsを使用すると、blockIdsにcoordinateのuidが含まれているか、いないか
-                          // 判別できる(trueかfalse)
-                          visible: !(model.blockIds?.contains(coordinate.uid) ??
-                              false),
-                          child: Column(
-                            children: [
-                              Card(
-                                color: Colors.white,
-                                child: ListTile(
-                                    title: coordinate.imgURL != null
-                                        ? Image.network(coordinate.imgURL!)
-                                        : null,
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              PostUserDetailPage(
-                                                  coordinate
-                                              ),
-                                        ),
-                                      );
-                                    }
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ),
+        body: Consumer<CoordinateListModel>(builder: (context, model, child) {
+          final List<Coordinate>? coordinate = model.coordinate;
+          if (coordinate == null) {
+            return Center(
+                child: const CircularProgressIndicator(
+              color: Colors.black,
+            ));
+          }
+          final List<Widget> widgets = coordinate
+              .map(
+                (coordinate) => Visibility(
+                  // containsを使用すると、blockIdsにcoordinateのuidが含まれているか、いないか
+                  // 判別できる(trueかfalse)
+                  visible: !(model.blockIds?.contains(coordinate.uid) ?? false),
+                  child: Column(
+                    children: [
+                      Card(
+                        color: Colors.white,
+                        child: ListTile(
+                            title: coordinate.imgURL != null
+                                ? Image.network(coordinate.imgURL!)
+                                : null,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      PostUserDetailPage(coordinate),
+                                ),
+                              );
+                            }),
+                      ),
+                    ],
+                  ),
+                ),
               )
-                  .toList();
+              .toList();
           model.blockList(uid);
           return ListView(children: widgets);
         }),
-        floatingActionButton: Consumer<CoordinateListModel>(
-            builder: (context, model, child) {
-              return SizedBox(
-                width: 70,
-                height: 70,
-                child: FloatingActionButton(
-                  backgroundColor: Colors.black,
-                  onPressed: () async {
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => PostCoordinatePage(),
-                        fullscreenDialog: true
-                    ),
-                  );
-                  //awaitつける事で、読み込まれるタイミングが変わる。
-                  model.fechCoordinateList();
-                  },
-                  tooltip: 'Increment',
-                  child: const Icon(Icons.photo,
-                    size: 40,
-                    color: Colors.white),
-              ),
-            );
-          }
-        ),
+        floatingActionButton:
+            Consumer<CoordinateListModel>(builder: (context, model, child) {
+          return SizedBox(
+            width: 70,
+            height: 70,
+            child: FloatingActionButton(
+              backgroundColor: Colors.black,
+              onPressed: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PostCoordinatePage(),
+                      fullscreenDialog: true),
+                );
+                //awaitつける事で、読み込まれるタイミングが変わる。
+                model.fechCoordinateList();
+              },
+              tooltip: 'Increment',
+              child: const Icon(Icons.photo, size: 40, color: Colors.white),
+            ),
+          );
+        }),
       ),
-    );}
+    );
+  }
 
   Future LogOutDialog(
-      BuildContext context,
-      ) {
+    BuildContext context,
+  ) {
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -187,15 +182,15 @@ class CoordinateListPage extends StatelessWidget {
             TextButton(
               child: Text("いいえ"),
               onPressed: () =>
-                Navigator.of(context).popUntil((route) => route.isFirst),
+                  Navigator.of(context).popUntil((route) => route.isFirst),
             ),
             TextButton(
               child: Text("はい"),
               onPressed: () async {
-                final provider = Provider.of<SigInModel>(
-                    context, listen: false);
+                final provider =
+                    Provider.of<SigInModel>(context, listen: false);
                 provider.logout(context);
-                },
+              },
             ),
           ],
         );
@@ -203,8 +198,6 @@ class CoordinateListPage extends StatelessWidget {
     );
   }
 }
-
-
 
 void _firstTimeEditPage(BuildContext context) async {
   final pref = await SharedPreferences.getInstance();
@@ -220,8 +213,6 @@ void _firstTimeEditPage(BuildContext context) async {
     pref.setBool('isAlreadyFirstLaunch', true);
   }
 }
-
-
 
 //今後アップデート用メモ
 // Image.network(coodinate.imgURL!, fit: BoxFit.cover,);

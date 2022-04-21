@@ -5,13 +5,11 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
-
 final sigInProvider = ChangeNotifierProvider<SigInModel>(
-      create: (ref) => SigInModel(),
+  create: (ref) => SigInModel(),
 );
 
 class SigInModel extends ChangeNotifier {
-
   String? email;
   String? AppleLoginName;
 
@@ -22,7 +20,6 @@ class SigInModel extends ChangeNotifier {
   GoogleSignInAccount get user => _user!;
 
   Future googleLogin() async {
-
     try {
       final googleUser = await googleSignIn.signIn();
       if (googleUser == null) return;
@@ -35,7 +32,8 @@ class SigInModel extends ChangeNotifier {
       );
 
       //クレデンシャル情報を受け取り、Firebaseでログイン
-      final userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+      final userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
 
       //userの情報取り出す
       final user = userCredential.user;
@@ -51,7 +49,7 @@ class SigInModel extends ChangeNotifier {
       //Firestoreに追加
       final doc = FirebaseFirestore.instance.collection('users').doc(uid);
       await doc.set({
-        'GoogleLogin': '',
+        'googleLogin': '',
         'name': user.displayName,
         'email': user.email,
         'uid': uid,
@@ -65,7 +63,6 @@ class SigInModel extends ChangeNotifier {
   }
 
   Future appleLogin() async {
-
     try {
       final rawNonce = generateNonce();
 
@@ -81,7 +78,8 @@ class SigInModel extends ChangeNotifier {
         rawNonce: rawNonce,
       );
 
-      final userCredential = await FirebaseAuth.instance.signInWithCredential(oauthCredential);
+      final userCredential =
+          await FirebaseAuth.instance.signInWithCredential(oauthCredential);
 
       final user = userCredential.user;
 
@@ -95,12 +93,12 @@ class SigInModel extends ChangeNotifier {
       //Firestoreに追加
       final doc = FirebaseFirestore.instance.collection('users').doc(uid);
       await doc.set({
-        'AppleLogin': '',
+        'appleLogin': '',
         'name': '',
         'email': '',
         'uid': uid,
-        'isSelectedItem' : '',
-        'isSelectedItem2' : '',
+        'isSelectedItem': '',
+        'isSelectedItem2': '',
       });
 
       await FirebaseAuth.instance.signInWithCredential(oauthCredential);
@@ -109,11 +107,9 @@ class SigInModel extends ChangeNotifier {
     }
   }
 
-
   Future logout(context) async {
     await googleSignIn.disconnect();
     FirebaseAuth.instance.signOut();
     Navigator.of(context).popUntil((route) => route.isFirst);
   }
 }
-

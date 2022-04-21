@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:minimal_coord/domain/coordinate.dart';
 import 'dart:io';
 
-
-
 class CoordinateListModel extends ChangeNotifier {
   List<Coordinate>? coordinate;
   List<String>? blockIds;
@@ -26,19 +24,18 @@ class CoordinateListModel extends ChangeNotifier {
   File? outerImageFile;
   File? shoesImageFile;
 
-
   //Firebaseと繋ぐ際はFutureを付ける
   Future<void> fechCoordinateList() async {
     final QuerySnapshot snapshot =
-    await FirebaseFirestore.instance.collection('coordinate').get();
+        await FirebaseFirestore.instance.collection('coordinate').get();
 
-    final List<Coordinate> coordinate = snapshot.docs.map((
-        DocumentSnapshot document) {
+    final List<Coordinate> coordinate =
+        snapshot.docs.map((DocumentSnapshot document) {
       Map<String, dynamic> data = document.data() as Map<String, dynamic>;
 
-      final String name = data['name'];
       final String uid = data['uid'];
       final String id = document.id;
+      final String sex = data['sex'];
       final String height = data['height'];
       final String tops = data['tops'];
       final String bottoms = data['bottoms'];
@@ -50,27 +47,20 @@ class CoordinateListModel extends ChangeNotifier {
       final String? imgBottomsURL = data['imgBottomsURL'];
       final String? imgOuterURL = data['imgOuterURL'];
       final String? imgShoesURL = data['imgShoesURL'];
-      final String?  isSelectedItem = data ['isSelectedItem'];
-      final String?  isSelectedItem2 = data ['isSelectedItem2'];
       return Coordinate(
-        name,
         uid,
         id,
-
+        sex,
         height,
         tops,
         bottoms,
         outer,
         shoes,
-
         imgURL,
         imgTopsURL,
         imgBottomsURL,
         imgOuterURL,
         imgShoesURL,
-
-        isSelectedItem,
-        isSelectedItem2,
       );
     }).toList();
 
@@ -78,34 +68,26 @@ class CoordinateListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-
-
   Future<void> blockUser(userId) async {
     final uid = FirebaseAuth.instance.currentUser!.uid;
-    FirebaseFirestore.instance.collection('blocks')
-        .doc(uid).set(
-      {
-        'blockUserId' : userId,
-      }
-    );
+    FirebaseFirestore.instance.collection('blocks').doc(uid).set({
+      'blockUserId': userId,
+    });
     notifyListeners();
   }
 
-
   Future<void> blockList(uid) async {
-    final QuerySnapshot snapshot =
-    await FirebaseFirestore.instance.collection('blocks')
+    final QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collection('blocks')
         .where('blockUserId', isNotEqualTo: null) // 〜と等しくない
         .get();
 
-    final List<String>? blockIds = snapshot.docs.map((
-        DocumentSnapshot document) {
+    final List<String>? blockIds =
+        snapshot.docs.map((DocumentSnapshot document) {
       Map<String, dynamic> data = document.data() as Map<String, dynamic>;
 
       final String blockUserId = data['blockUserId'];
-      return (
-        blockUserId
-      );
+      return (blockUserId);
     }).toList();
 
     this.blockIds = blockIds;

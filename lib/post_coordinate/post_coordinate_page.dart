@@ -1,34 +1,32 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minimal_coord/post_coordinate/post_coordnate_page.model.dart';
 import 'package:provider/provider.dart';
 
 class PostCoordinatePage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-
-    final user = FirebaseAuth.instance.currentUser!.uid;
-    print('user; $user');
     return ChangeNotifierProvider<PostCoordinatePageModel>(
       create: (_) => PostCoordinatePageModel(),
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black,
-          title: Text('PostPage',style: GoogleFonts.yuseiMagic(
-            textStyle: const TextStyle(
-              color: Colors.white,
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
+          title: Text(
+            'PostPage',
+            style: GoogleFonts.yuseiMagic(
+              textStyle: const TextStyle(
+                color: Colors.white,
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
           ),
           centerTitle: false,
         ),
         body: SingleChildScrollView(
           child: Center(
-            child: Consumer<PostCoordinatePageModel>(builder: (context, model, child) {
+            child: Consumer<PostCoordinatePageModel>(
+                builder: (context, model, child) {
               return Stack(
                 children: [
                   Padding(
@@ -43,11 +41,12 @@ class PostCoordinatePage extends StatelessWidget {
                             child: model.imageFile != null
                                 ? Image.file(model.imageFile!)
                                 : Container(
-                              child: const Center(
-                                child: Icon(Icons.add_a_photo,color: Colors.white, size: 200),
-                              ),
-                              color: Colors.grey,
-                            ),
+                                    child: const Center(
+                                      child: Icon(Icons.add_a_photo,
+                                          color: Colors.white, size: 200),
+                                    ),
+                                    color: Colors.grey,
+                                  ),
                           ),
                           onTap: () async {
                             await model.pickImage();
@@ -58,13 +57,79 @@ class PostCoordinatePage extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            Text('Tops👕',style: GoogleFonts.yuseiMagic(
-                              textStyle: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
+                            Text(
+                              'Sex👫',
+                              style: GoogleFonts.yuseiMagic(
+                                textStyle: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
+                              width: 230,
+                              child: TextField(
+                                maxLength: 7,
+                                decoration: const InputDecoration(
+                                  hintText: 'Sex',
+                                ),
+                                onChanged: (text) {
+                                  model.sex = text;
+                                },
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'Height🚶‍♀️',
+                              style: GoogleFonts.yuseiMagic(
+                                textStyle: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
+                              width: 230,
+                              child: TextField(
+                                maxLength: 7,
+                                decoration: const InputDecoration(
+                                  hintText: 'Height',
+                                ),
+                                onChanged: (text) {
+                                  model.height = text;
+                                },
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'Tops👕',
+                              style: GoogleFonts.yuseiMagic(
+                                textStyle: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -81,11 +146,12 @@ class PostCoordinatePage extends StatelessWidget {
                                 child: model.topsImageFile != null
                                     ? Image.file(model.topsImageFile!)
                                     : Container(
-                                  child: const Center(
-                                    child:   Icon(Icons.add_a_photo,color: Colors.white),
-                                  ),
-                                  color: Colors.grey,
-                                ),
+                                        child: const Center(
+                                          child: Icon(Icons.add_a_photo,
+                                              color: Colors.white),
+                                        ),
+                                        color: Colors.grey,
+                                      ),
                               ),
                               onTap: () async {
                                 await model.topsImage();
@@ -110,13 +176,15 @@ class PostCoordinatePage extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            Text('Bottoms👖',style: GoogleFonts.yuseiMagic(
-                              textStyle: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
+                            Text(
+                              'Bottoms👖',
+                              style: GoogleFonts.yuseiMagic(
+                                textStyle: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
                             ),
                           ],
                         ),
@@ -133,11 +201,14 @@ class PostCoordinatePage extends StatelessWidget {
                                 child: model.bottomsImageFile != null
                                     ? Image.file(model.bottomsImageFile!)
                                     : Container(
-                                  child: const Center(
-                                    child:   Icon(Icons.add_a_photo,color: Colors.white,),
-                                  ),
-                                  color: Colors.grey,
-                                ),
+                                        child: const Center(
+                                          child: Icon(
+                                            Icons.add_a_photo,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        color: Colors.grey,
+                                      ),
                               ),
                               onTap: () async {
                                 await model.bottomsImage();
@@ -162,13 +233,15 @@ class PostCoordinatePage extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            Text('Outer🧥',style: GoogleFonts.yuseiMagic(
-                              textStyle: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
+                            Text(
+                              'Outer🧥',
+                              style: GoogleFonts.yuseiMagic(
+                                textStyle: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
                             ),
                           ],
                         ),
@@ -185,11 +258,14 @@ class PostCoordinatePage extends StatelessWidget {
                                 child: model.outerImageFile != null
                                     ? Image.file(model.outerImageFile!)
                                     : Container(
-                                  child: const Center(
-                                    child:   Icon(Icons.add_a_photo,color: Colors.white,),
-                                  ),
-                                  color: Colors.grey,
-                                ),
+                                        child: const Center(
+                                          child: Icon(
+                                            Icons.add_a_photo,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        color: Colors.grey,
+                                      ),
                               ),
                               onTap: () async {
                                 await model.outerImage();
@@ -214,13 +290,15 @@ class PostCoordinatePage extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            Text('Shoes👞',style: GoogleFonts.yuseiMagic(
-                              textStyle: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
+                            Text(
+                              'Shoes👞',
+                              style: GoogleFonts.yuseiMagic(
+                                textStyle: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
                             ),
                           ],
                         ),
@@ -237,11 +315,14 @@ class PostCoordinatePage extends StatelessWidget {
                                 child: model.shoesImageFile != null
                                     ? Image.file(model.shoesImageFile!)
                                     : Container(
-                                  child: const Center(
-                                    child:   Icon(Icons.add_a_photo,color: Colors.white,),
-                                  ),
-                                  color: Colors.grey,
-                                ),
+                                        child: const Center(
+                                          child: Icon(
+                                            Icons.add_a_photo,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        color: Colors.grey,
+                                      ),
                               ),
                               onTap: () async {
                                 await model.shoesImage();
@@ -280,8 +361,9 @@ class PostCoordinatePage extends StatelessWidget {
                               model.endLoading();
                             }
                           },
-                          child: Text('投稿',style:
-                           TextStyle(
+                          child: Text(
+                            '投稿',
+                            style: TextStyle(
                               color: Colors.white,
                               fontSize: 15,
                               fontWeight: FontWeight.bold,

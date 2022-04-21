@@ -7,22 +7,23 @@ class PostUserDetailModel extends ChangeNotifier {
   List<Coordinate>? coordinate;
   List<String>? blockIds;
   String? name;
+  String? uid;
   String? email;
-  String? isSelectedItem;
-  String? isSelectedItem2;
+  String? sex;
+  String? height;
 
   Future<void> fechCoordinateList() async {
     final QuerySnapshot snapshot =
-    await FirebaseFirestore.instance.collection('coordinate').get();
+        await FirebaseFirestore.instance.collection('coordinate').get();
 
-    final List<Coordinate> coordinate = snapshot.docs.map((
-        DocumentSnapshot document) {
+    final List<Coordinate> coordinate =
+        snapshot.docs.map((DocumentSnapshot document) {
       Map<String, dynamic> data = document.data() as Map<String, dynamic>;
 
-      final String name = data['name'];
       final String uid = data['uid'];
       final String id = document.id;
       final String height = data['height'];
+      final String sex = data['sex'];
       final String tops = data['tops'];
       final String bottoms = data['bottoms'];
       final String outer = data['outer'];
@@ -34,26 +35,20 @@ class PostUserDetailModel extends ChangeNotifier {
       final String? imgOuterURL = data['imgOuterURL'];
       final String? imgShoesURL = data['imgShoesURL'];
 
-      final String? isSelectedItem = data['isSelectedItem'];
-      final String? isSelectedItem2 = data['isSelectedItem2'];
       return Coordinate(
-        name,
         uid,
         id,
+        sex,
         height,
         tops,
         bottoms,
         outer,
         shoes,
-
         imgURL,
         imgTopsURL,
         imgBottomsURL,
         imgOuterURL,
         imgShoesURL,
-
-        isSelectedItem,
-        isSelectedItem2,
       );
     }).toList();
 
@@ -63,29 +58,24 @@ class PostUserDetailModel extends ChangeNotifier {
 
   Future<void> blockUser(userId) async {
     final uid = FirebaseAuth.instance.currentUser!.uid;
-    FirebaseFirestore.instance.collection('blocks')
-        .doc(uid).set(
-        {
-          'blockUserId' : userId,
-        }
-    );
+    FirebaseFirestore.instance.collection('blocks').doc(uid).set({
+      'blockUserId': userId,
+    });
     notifyListeners();
   }
 
   Future<void> blockList(uid) async {
-    final QuerySnapshot snapshot =
-    await FirebaseFirestore.instance.collection('blocks')
+    final QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collection('blocks')
         .where('blockUserId', isNotEqualTo: uid) // 〜と等しくない
         .get();
 
-    final List<String>? blockIds = snapshot.docs.map((
-        DocumentSnapshot document) {
+    final List<String>? blockIds =
+        snapshot.docs.map((DocumentSnapshot document) {
       Map<String, dynamic> data = document.data() as Map<String, dynamic>;
 
       final String blockUserId = data['blockUserId'];
-      return (
-          blockUserId
-      );
+      return (blockUserId);
     }).toList();
 
     this.blockIds = blockIds;
@@ -98,11 +88,10 @@ class PostUserDetailModel extends ChangeNotifier {
 
     final uid = FirebaseAuth.instance.currentUser!.uid;
     final snapshot =
-    await FirebaseFirestore.instance.collection('users').doc(uid).get();
+        await FirebaseFirestore.instance.collection('users').doc(uid).get();
     final data = snapshot.data();
     this.name = data?['name'];
-    this.isSelectedItem = data?['isSelectedItem'];
-    this.isSelectedItem2 = data?['isSelectedItem2'];
+    this.uid = data?['uid'];
     notifyListeners();
   }
 }

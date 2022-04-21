@@ -6,8 +6,10 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class PostCoordinatePageModel extends ChangeNotifier {
-
+  String? name;
   String? tops;
+  String? sex;
+  String? height;
   String? bottoms;
   String? outer;
   String? shoes;
@@ -37,11 +39,17 @@ class PostCoordinatePageModel extends ChangeNotifier {
     notifyListeners();
   }
 
-
   Future addCoordinate() async {
-
     if (imageFile == null || imageFile == "") {
       throw '全身画像が入力されていません';
+    }
+
+    if (sex == null || sex == "") {
+      throw 'Sexが入力されていません';
+    }
+
+    if (height == null || height == "") {
+      throw '身長が入力されていません';
     }
 
     if (topsImageFile == null || topsImageFile == "") {
@@ -60,7 +68,6 @@ class PostCoordinatePageModel extends ChangeNotifier {
       throw 'Shoesが入力されていません';
     }
 
-
     final doc = FirebaseFirestore.instance.collection('coordinate').doc();
 
     if (imageFile != null) {
@@ -72,7 +79,6 @@ class PostCoordinatePageModel extends ChangeNotifier {
     }
 
     if (topsImageFile != null) {
-
       final task = await FirebaseStorage.instance
           .ref('coordinate/${doc.id}_tops')
           .putFile(topsImageFile!);
@@ -88,7 +94,6 @@ class PostCoordinatePageModel extends ChangeNotifier {
     }
 
     if (outerImageFile != null) {
-
       final task = await FirebaseStorage.instance
           .ref('coordinate/${doc.id}_outer')
           .putFile(outerImageFile!);
@@ -96,32 +101,29 @@ class PostCoordinatePageModel extends ChangeNotifier {
     }
 
     if (shoesImageFile != null) {
-
       final task = await FirebaseStorage.instance
           .ref('coordinate/${doc.id}_shoes')
           .putFile(shoesImageFile!);
       imgShoesURL = await task.ref.getDownloadURL();
     }
 
-
     final uid = FirebaseAuth.instance.currentUser!.uid;
 
     // Firestoreに追加
-    return FirebaseFirestore.instance.collection('coordinate')
-        .doc().set(
-        {
-          'uid': uid,
-
-          'tops': tops,
-          'bottoms': bottoms,
-          'outer': outer,
-          'shoes': shoes,
-
-          'imgURL': imgURL,
-          'imgTopsURL': imgTopsURL,
-          'imgBottomsURL' :imgBottomsURL,
-          'imgOuterURL' : imgOuterURL,
-          'imgShoesURL' : imgShoesURL,
+    return FirebaseFirestore.instance.collection('coordinate').doc().set({
+      'uid': uid,
+      'name': name,
+      'tops': tops,
+      'sex': sex,
+      'height': height,
+      'bottoms': bottoms,
+      'outer': outer,
+      'shoes': shoes,
+      'imgURL': imgURL,
+      'imgTopsURL': imgTopsURL,
+      'imgBottomsURL': imgBottomsURL,
+      'imgOuterURL': imgOuterURL,
+      'imgShoesURL': imgShoesURL,
     });
   }
 
