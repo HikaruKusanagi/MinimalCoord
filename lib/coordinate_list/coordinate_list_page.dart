@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minimal_coord/coordinate_list/coordinate_list_model.dart';
 import 'package:minimal_coord/domain/coordinate.dart';
-import 'package:minimal_coord/mypage/my_page.dart';
 import 'package:minimal_coord/post_coordinate/post_coordinate_page.dart';
 import 'package:minimal_coord/post_user_detail/post_user_detail_page.dart';
 import 'package:minimal_coord/rule_page/rule_page.dart';

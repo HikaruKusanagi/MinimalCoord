@@ -97,8 +97,6 @@ class SigInModel extends ChangeNotifier {
         'name': '',
         'email': '',
         'uid': uid,
-        'isSelectedItem': '',
-        'isSelectedItem2': '',
       });
 
       await FirebaseAuth.instance.signInWithCredential(oauthCredential);
