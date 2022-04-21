@@ -47,7 +47,7 @@ android {
         applicationId "com.hikaru.minimal_coord"
         minSdkVersion 19
         targetSdkVersion 32
-        versionCode 10
+        versionCode 11
         versionName flutterVersionName
         multiDexEnabled true
     }
