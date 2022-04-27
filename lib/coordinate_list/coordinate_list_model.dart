@@ -79,7 +79,7 @@ class CoordinateListModel extends ChangeNotifier {
   Future<void> blockList(uid) async {
     final QuerySnapshot snapshot = await FirebaseFirestore.instance
         .collection('blocks')
-        .where('blockUserId', isNotEqualTo: null) // 〜と等しくない
+        .where('blockUserId', isNotEqualTo: uid) // 〜と等しくない
         .get();
 
     final List<String>? blockIds =
